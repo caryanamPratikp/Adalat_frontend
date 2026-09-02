@@ -1,0 +1,263 @@
+/* Premium State-of-the-Art Advocate Card Styling */
+
+.premium-lawyer-card {
+  position: relative;
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 1.5px solid #E2E8F0;
+  box-shadow: 0 4px 14px rgba(16, 42, 67, 0.05);
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.premium-lawyer-card:hover {
+  transform: translateY(-4px);
+  border-color: #C9A227;
+  box-shadow: 0 16px 32px rgba(201, 162, 39, 0.15);
+}
+
+.card-top-bar {
+  height: 4px;
+  background: linear-gradient(90deg, #102A43 0%, #C9A227 50%, #102A43 100%);
+  width: 100%;
+}
+
+.card-inner-padding {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify: space-between;
+  flex: 1;
+  gap: 1rem;
+}
+
+/* Header */
+.lawyer-card-header {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+}
+
+.lawyer-avatar-container {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.lawyer-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #102A43 0%, #243B53 100%);
+  color: #C9A227;
+  font-family: 'Cinzel', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(16, 42, 67, 0.18);
+  border: 1.5px solid rgba(201, 162, 39, 0.4);
+}
+
+.online-status-dot {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 13px;
+  height: 13px;
+  background-color: #10B981;
+  border: 2px solid #FFFFFF;
+  border-radius: 50%;
+}
+
+.lawyer-header-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.name-and-verification {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+
+.lawyer-name {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #102A43;
+  font-family: 'Cinzel', serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.verified-pill {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #065F46;
+  background: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-shrink: 0;
+}
+
+.shield-icon {
+  color: #10B981;
+}
+
+.rating-and-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 0.25rem;
+}
+
+.rating-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: #FEF3C7;
+  border: 1px solid #FDE68A;
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+  font-size: 0.74rem;
+}
+
+.rating-score {
+  font-weight: 700;
+  color: #92400E;
+}
+
+.rating-reviews-count {
+  color: #B45309;
+  font-weight: 500;
+  font-size: 0.68rem;
+}
+
+.bar-number {
+  font-size: 0.72rem;
+  color: #64748B;
+}
+
+.category-badge-container {
+  margin-top: 0.4rem;
+}
+
+.category-badge-pill {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: rgba(201, 162, 39, 0.1);
+  color: #B08B1E;
+  border: 1px solid #C9A227;
+  padding: 0.15rem 0.55rem;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* Body */
+.lawyer-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex: 1;
+}
+
+.meta-chips-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.74rem;
+  color: #475569;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  padding: 0.25rem 0.55rem;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.chip-icon {
+  color: #C9A227;
+}
+
+.lawyer-bio {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #64748B;
+  line-height: 1.45;
+}
+
+.specializations-row {
+  font-size: 0.75rem;
+  background: #FFFDF5;
+  border: 1px solid #FDE68A;
+  padding: 0.35rem 0.65rem;
+  border-radius: 8px;
+}
+
+.spec-label {
+  font-weight: 700;
+  color: #C9A227;
+  margin-right: 0.3rem;
+}
+
+.spec-text {
+  color: #102A43;
+  font-weight: 500;
+}
+
+/* Footer */
+.lawyer-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.75rem;
+  border-top: 1px solid #F1F5F9;
+  margin-top: auto;
+}
+
+.pricing-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-value {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #102A43;
+}
+
+.free-trial-tag {
+  font-size: 0.68rem;
+  color: #059669;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.consult-now-btn {
+  padding: 0.45rem 1rem !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+  border-radius: 10px !important;
+}
