@@ -51,10 +51,17 @@ const AppLayout = () => {
                            location.pathname.startsWith('/lawyer/') || 
                            location.pathname.startsWith('/admin/');
 
+  const isRegisterRoute = location.pathname === '/register' || 
+                           location.pathname === '/lawyer/register' ||
+                           location.pathname.startsWith('/register') ||
+                           location.pathname === '/login';
+
+  const hideNavbarFooter = isDashboardRoute || isRegisterRoute;
+
   return (
     <>
       <ScrollToTop />
-      {!isDashboardRoute && <Navbar />}
+      {!hideNavbarFooter && <Navbar />}
       <div className="page-wrapper" style={{ transition: 'opacity 0.3s ease-in-out' }}>
         <Routes>
           {/* Public */}
@@ -111,7 +118,7 @@ const AppLayout = () => {
           <Route path="/admin/reports" element={<AdminReportsPage />} />
         </Routes>
       </div>
-      {!isDashboardRoute && <Footer />}
+      {!hideNavbarFooter && <Footer />}
     </>
   );
 };

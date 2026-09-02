@@ -18,7 +18,7 @@ const CustomerProfilePage = () => {
 
         <div className="section-card card" style={{ maxWidth: '640px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', marginBottom: '2rem', paddingBottom: '1.5rem', borderBottom: '1px solid #E2E8F0' }}>
-            <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: '#102A43', color: '#C9A227', fontSize: '1.6rem', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: '#102A43', color: '#5C5C99', fontSize: '1.6rem', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {user?.fullName ? user.fullName.charAt(0) : 'C'}
             </div>
             <div>

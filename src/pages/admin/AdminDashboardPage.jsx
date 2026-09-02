@@ -6,22 +6,29 @@ import LoadingState from '../../components/LoadingState';
 import EmptyState from '../../components/EmptyState';
 import { adminApi } from '../../api/adminApi';
 import { lawyerApi } from '../../api/lawyerApi';
+import apiClient from '../../api/apiClient';
 import { Users, UserCheck, ShieldCheck, CreditCard } from 'lucide-react';
 import './AdminPortalPages.css';
 
 const AdminDashboardPage = () => {
   const [pendingLawyers, setPendingLawyers] = useState([]);
   const [approvedLawyers, setApprovedLawyers] = useState([]);
+  const [totalVolume, setTotalVolume] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
     Promise.all([
       adminApi.getPendingLawyers().catch(() => ({ data: [] })),
-      lawyerApi.getApprovedLawyers().catch(() => ({ data: [] }))
-    ]).then(([pendingRes, approvedRes]) => {
+      lawyerApi.getApprovedLawyers().catch(() => ({ data: [] })),
+      apiClient.get('/api/admin/payments').catch(() => ({ data: [] }))
+    ]).then(([pendingRes, approvedRes, paymentsRes]) => {
       setPendingLawyers((pendingRes && Array.isArray(pendingRes.data)) ? pendingRes.data : []);
       setApprovedLawyers((approvedRes && Array.isArray(approvedRes.data)) ? approvedRes.data : []);
+      
+      const payments = (paymentsRes && Array.isArray(paymentsRes.data)) ? paymentsRes.data : [];
+      const sum = payments.reduce((acc, p) => acc + (p.amountNum || 0), 0);
+      setTotalVolume(sum);
     }).finally(() => setLoading(false));
   }, []);
 
@@ -44,6 +51,7 @@ const AdminDashboardPage = () => {
               <p>Total Registered Advocates</p>
             </div>
           </div>
+
           <div className="metric-card card">
             <div className="metric-icon-box gold"><ShieldCheck size={22} /></div>
             <div>
@@ -51,6 +59,7 @@ const AdminDashboardPage = () => {
               <p>Approved Lawyers</p>
             </div>
           </div>
+
           <div className="metric-card card">
             <div className="metric-icon-box teal"><UserCheck size={22} /></div>
             <div>
@@ -58,11 +67,12 @@ const AdminDashboardPage = () => {
               <p>Lawyer Approvals</p>
             </div>
           </div>
+
           <div className="metric-card card">
             <div className="metric-icon-box navy"><CreditCard size={22} /></div>
             <div>
-              <h3>₹0.00</h3>
-              <p>Total Platform Revenue</p>
+              <h3>₹{totalVolume.toFixed(2)}</h3>
+              <p>Total Platform Financial Volume</p>
             </div>
           </div>
         </div>

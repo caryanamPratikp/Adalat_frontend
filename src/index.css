@@ -1,25 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Colors */
-  --primary-navy: #102A43;
-  --secondary-navy: #243B53;
-  --primary-navy-hover: #0a1b2b;
-  --accent-gold: #C9A227;
-  --accent-gold-hover: #B08B1E;
-  --accent-gold-light: rgba(201, 162, 39, 0.1);
-  --bg-ivory: #F8F6F1;
+  /* User Custom Color Palette Palette Swatch */
+  --color-lavender-light: #CCCCFF;
+  --color-lavender-muted: #A3A3CC;
+  --color-slate-indigo: #5C5C99;
+  --color-deep-royal: #292966;
+
+  /* Global Theme Mapping */
+  --primary-navy: #292966;
+  --secondary-navy: #5C5C99;
+  --primary-navy-hover: #1f1f50;
+  --accent-gold: #5C5C99;
+  --accent-gold-hover: #45457a;
+  --accent-gold-light: rgba(204, 204, 255, 0.25);
+  --bg-ivory: #F2F2FC;
   --bg-white: #FFFFFF;
-  --teal-accent: #2C7A7B;
-  --teal-accent-hover: #235f5f;
+  --teal-accent: #5C5C99;
+  --teal-accent-hover: #292966;
   
-  --text-dark: #1F2937;
-  --text-secondary: #475569;
-  --text-muted: #64748B;
-  --text-light: #F8FAFC;
+  --text-dark: #1A1A40;
+  --text-secondary: #5C5C99;
+  --text-muted: #7E7EAD;
+  --text-light: #F4F4FF;
   
-  --border-color: #E2E8F0;
-  --border-focus: #C9A227;
+  --border-color: #DADAEC;
+  --border-focus: #5C5C99;
   
   --error-color: #EF4444;
   --error-bg: #FEF2F2;
@@ -79,6 +85,15 @@ html, body, #root {
   width: 100%;
   min-height: 100vh;
   top: 0 !important;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Opera */
+  width: 0 !important;
+  height: 0 !important;
 }
 
 body {

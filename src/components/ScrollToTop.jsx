@@ -38,15 +38,15 @@ const ScrollToTop = () => {
     width: '48px',
     height: '48px',
     borderRadius: '50%',
-    backgroundColor: '#C9A227', // accent-gold
+    backgroundColor: '#5C5C99', // accent-gold
     color: '#FFFFFF',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     border: 'none',
     cursor: 'pointer',
-    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-    transition: 'all 0.3s ease-in-out',
+    boxShadow: '0 4px 14px rgba(92, 92, 153, 0.3)',
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
     opacity: isVisible ? 1 : 0,
     transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
     pointerEvents: isVisible ? 'auto' : 'none',
@@ -57,8 +57,20 @@ const ScrollToTop = () => {
       onClick={scrollToTop}
       style={buttonStyle}
       aria-label="Scroll to top"
-      onMouseOver={(e) => (e.currentTarget.style.transform = isVisible ? 'scale(1.1) translateY(0)' : 'translateY(20px)')}
-      onMouseOut={(e) => (e.currentTarget.style.transform = isVisible ? 'scale(1) translateY(0)' : 'translateY(20px)')}
+      onMouseOver={(e) => {
+        if (isVisible) {
+          e.currentTarget.style.transform = 'translateY(-4px) scale(1.1)';
+          e.currentTarget.style.boxShadow = '0 8px 24px rgba(92, 92, 153, 0.55)';
+          e.currentTarget.style.backgroundColor = '#45457a';
+        }
+      }}
+      onMouseOut={(e) => {
+        if (isVisible) {
+          e.currentTarget.style.transform = 'translateY(0) scale(1)';
+          e.currentTarget.style.boxShadow = '0 4px 14px rgba(92, 92, 153, 0.3)';
+          e.currentTarget.style.backgroundColor = '#5C5C99';
+        }
+      }}
     >
       <ChevronUp size={24} />
     </button>

@@ -211,7 +211,7 @@ const CustomerConsultationPage = () => {
           <div className="consultations-list-panel">
             <div className="panel-title" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <span><MessageSquare size={16} /> My Consultations ({consultationsList.length})</span>
-              <button onClick={fetchCustomerConsultations} style={{ background: 'transparent', border: 'none', color: '#C9A227', cursor: 'pointer' }} title="Refresh">
+              <button onClick={fetchCustomerConsultations} style={{ background: 'transparent', border: 'none', color: '#5C5C99', cursor: 'pointer' }} title="Refresh">
                 <RefreshCw size={14} />
               </button>
             </div>
@@ -365,8 +365,8 @@ const CustomerConsultationPage = () => {
 
                 <div className="chat-messages-container">
                   {activeConsultation.caseSummary && (
-                    <div style={{ background: '#FFFDF5', border: '1px solid #C9A227', borderRadius: '12px', padding: '0.85rem 1rem', marginBottom: '1rem', fontSize: '0.82rem', color: '#102A43', lineHeight: '1.5' }}>
-                      <div style={{ fontWeight: 700, color: '#C9A227', marginBottom: '0.35rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                    <div style={{ background: '#FFFDF5', border: '1px solid #5C5C99', borderRadius: '12px', padding: '0.85rem 1rem', marginBottom: '1rem', fontSize: '0.82rem', color: '#102A43', lineHeight: '1.5' }}>
+                      <div style={{ fontWeight: 700, color: '#5C5C99', marginBottom: '0.35rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
                         📌 SHARED AI CASE ASSESSMENT WITH ADVOCATE
                       </div>
                       <p style={{ margin: 0, whiteSpace: 'pre-line' }}>{activeConsultation.caseSummary}</p>
@@ -391,7 +391,7 @@ const CustomerConsultationPage = () => {
                                     cursor: 'pointer', 
                                     borderRadius: '10px', 
                                     overflow: 'hidden', 
-                                    border: '1.5px solid #C9A227', 
+                                    border: '1.5px solid #5C5C99', 
                                     maxHeight: '180px',
                                     background: '#09131F',
                                     display: 'inline-block'
@@ -404,7 +404,7 @@ const CustomerConsultationPage = () => {
                                   />
                                   <div style={{ padding: '0.25rem 0.5rem', background: '#102A43', color: '#FFF', fontSize: '0.7rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                     <span>📷 {fileName}</span>
-                                    <span style={{ color: '#C9A227', fontWeight: 600 }}>Click to Expand</span>
+                                    <span style={{ color: '#5C5C99', fontWeight: 600 }}>Click to Expand</span>
                                   </div>
                                 </div>
                               ) : (
@@ -413,7 +413,7 @@ const CustomerConsultationPage = () => {
                                   style={{
                                     background: '#102A43',
                                     color: '#FFFFFF',
-                                    border: '1.5px solid #C9A227',
+                                    border: '1.5px solid #5C5C99',
                                     borderRadius: '10px',
                                     padding: '0.5rem 0.75rem',
                                     cursor: 'pointer',
@@ -425,12 +425,12 @@ const CustomerConsultationPage = () => {
                                   }}
                                 >
                                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', overflow: 'hidden' }}>
-                                    <FileText size={18} style={{ color: '#C9A227', flexShrink: 0 }} />
+                                    <FileText size={18} style={{ color: '#5C5C99', flexShrink: 0 }} />
                                     <span style={{ fontSize: '0.78rem', fontWeight: 600, textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
                                       {fileName}
                                     </span>
                                   </div>
-                                  <span style={{ fontSize: '0.7rem', background: '#C9A227', color: '#102A43', padding: '0.2rem 0.5rem', borderRadius: '6px', fontWeight: 700, flexShrink: 0 }}>
+                                  <span style={{ fontSize: '0.7rem', background: '#5C5C99', color: '#102A43', padding: '0.2rem 0.5rem', borderRadius: '6px', fontWeight: 700, flexShrink: 0 }}>
                                     Preview PDF
                                   </span>
                                 </div>
@@ -540,10 +540,10 @@ const CustomerConsultationPage = () => {
       {/* Client Advocate Rating Modal */}
       {showRatingModal && activeConsultation && (
         <div className="modal-overlay" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(9, 19, 31, 0.75)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1rem' }}>
-          <div style={{ background: '#FFFFFF', borderRadius: '16px', maxWidth: '480px', width: '100%', padding: '1.5rem', boxShadow: '0 20px 40px rgba(0,0,0,0.3)', border: '2px solid #C9A227' }}>
+          <div style={{ background: '#FFFFFF', borderRadius: '16px', maxWidth: '480px', width: '100%', padding: '1.5rem', boxShadow: '0 20px 40px rgba(0,0,0,0.3)', border: '2px solid #5C5C99' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Star size={22} fill="#C9A227" color="#C9A227" />
+                <Star size={22} fill="#5C5C99" color="#5C5C99" />
                 <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#102A43' }}>Rate Your Advocate</h3>
               </div>
               <button onClick={() => setShowRatingModal(false)} style={{ background: 'transparent', border: 'none', color: '#64748B', cursor: 'pointer' }}>
@@ -557,7 +557,7 @@ const CustomerConsultationPage = () => {
 
             <form onSubmit={handleRatingSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div style={{ textAlign: 'center' }}>
-                <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#C9A227', textTransform: 'uppercase', letterSpacing: '0.5px', display: 'block', marginBottom: '0.5rem' }}>
+                <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#5C5C99', textTransform: 'uppercase', letterSpacing: '0.5px', display: 'block', marginBottom: '0.5rem' }}>
                   SELECT RATING ({hoverRating || userRating} / 5 STARS)
                 </label>
                 <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
@@ -572,8 +572,8 @@ const CustomerConsultationPage = () => {
                     >
                       <Star
                         size={32}
-                        fill={(hoverRating || userRating) >= star ? '#C9A227' : 'none'}
-                        color={(hoverRating || userRating) >= star ? '#C9A227' : '#CBD5E1'}
+                        fill={(hoverRating || userRating) >= star ? '#5C5C99' : 'none'}
+                        color={(hoverRating || userRating) >= star ? '#5C5C99' : '#CBD5E1'}
                       />
                     </button>
                   ))}
@@ -610,10 +610,10 @@ const CustomerConsultationPage = () => {
       {/* PDF / Document Viewer Overlay Modal */}
       {showPdfModal && (
         <div className="modal-overlay" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(9, 19, 31, 0.8)', backdropFilter: 'blur(5px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000, padding: '1rem' }}>
-          <div style={{ background: '#FFFFFF', borderRadius: '16px', maxWidth: '750px', width: '100%', height: '85vh', display: 'flex', flexDirection: 'column', boxShadow: '0 25px 50px rgba(0,0,0,0.35)', border: '2px solid #C9A227', overflow: 'hidden' }}>
-            <div style={{ padding: '1rem 1.5rem', background: '#102A43', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '2px solid #C9A227' }}>
+          <div style={{ background: '#FFFFFF', borderRadius: '16px', maxWidth: '750px', width: '100%', height: '85vh', display: 'flex', flexDirection: 'column', boxShadow: '0 25px 50px rgba(0,0,0,0.35)', border: '2px solid #5C5C99', overflow: 'hidden' }}>
+            <div style={{ padding: '1rem 1.5rem', background: '#102A43', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '2px solid #5C5C99' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                <FileText size={22} style={{ color: '#C9A227' }} />
+                <FileText size={22} style={{ color: '#5C5C99' }} />
                 <div>
                   <h3 style={{ margin: 0, fontSize: '1.05rem', color: '#FFFFFF', fontFamily: 'Cinzel, serif' }}>Document Viewer: {viewingPdfName}</h3>
                   <span style={{ fontSize: '0.72rem', color: '#94A3B8' }}>Verified Legal Attachment • Ref #{activeConsultation?.id || '1'}</span>
@@ -638,7 +638,7 @@ const CustomerConsultationPage = () => {
                 </div>
               ) : (
                 <div style={{ background: '#FFFFFF', border: '1px solid #CBD5E1', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.04)', fontSize: '0.9rem', color: '#102A43', lineHeight: '1.7', fontFamily: 'Georgia, serif', width: '100%' }}>
-                  <div style={{ textAlign: 'center', borderBottom: '2px double #C9A227', paddingBottom: '1rem', marginBottom: '1rem' }}>
+                  <div style={{ textAlign: 'center', borderBottom: '2px double #5C5C99', paddingBottom: '1rem', marginBottom: '1rem' }}>
                     <h2 style={{ margin: 0, fontFamily: 'Cinzel, serif', color: '#102A43', fontSize: '1.3rem' }}>LEGAL CONSULTATION CASE DOCUMENT</h2>
                     <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.8rem', color: '#64748B' }}>Adalat Legal Services • File: {viewingPdfName}</p>
                   </div>
@@ -650,7 +650,7 @@ const CustomerConsultationPage = () => {
                     <p><strong>Assigned Time:</strong> {activeConsultation?.assignedDate || 'Scheduled'} at {activeConsultation?.assignedTime || 'Time'}</p>
                   </div>
 
-                  <div style={{ background: '#F1F5F9', borderLeft: '4px solid #C9A227', padding: '1rem', borderRadius: '4px', margin: '1rem 0' }}>
+                  <div style={{ background: '#F1F5F9', borderLeft: '4px solid #5C5C99', padding: '1rem', borderRadius: '4px', margin: '1rem 0' }}>
                     <strong>ATTACHED CASE FACTS & SUMMARY:</strong>
                     <p style={{ margin: '0.5rem 0 0 0', fontStyle: 'italic' }}>
                       {activeConsultation?.caseSummary || 'Legal intake document and case evidence attached for advocate consultation review.'}

@@ -1,24 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar';
 import StatusBadge from '../../components/StatusBadge';
 import EmptyState from '../../components/EmptyState';
-import { Users } from 'lucide-react';
+import LoadingState from '../../components/LoadingState';
+import apiClient from '../../api/apiClient';
+import { Users, RefreshCw } from 'lucide-react';
 
 const AdminCustomersPage = () => {
   const [customers, setCustomers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchCustomers = () => {
+    setLoading(true);
+    apiClient.get('/api/admin/customers')
+      .then(res => {
+        if (res && res.data && Array.isArray(res.data)) {
+          setCustomers(res.data);
+        } else {
+          setCustomers([]);
+        }
+      })
+      .catch(() => setCustomers([]))
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchCustomers();
+  }, []);
 
   return (
     <div className="portal-layout">
       <Sidebar portalType="admin" />
 
       <main className="portal-main-content">
-        <div className="portal-header">
-          <h1>Customer Management</h1>
-          <p>Registered customer directory and activation payment statuses.</p>
+        <div className="portal-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div>
+            <span className="badge badge-gold">Database Directory</span>
+            <h1>Customer Management</h1>
+            <p>Registered customer directory and activation payment statuses fetched directly from MySQL database.</p>
+          </div>
+          <button onClick={fetchCustomers} className="btn btn-secondary btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            <RefreshCw size={14} /> Refresh
+          </button>
         </div>
 
         <div className="section-card card">
-          {customers.length === 0 ? (
+          {loading ? (
+            <LoadingState message="Fetching registered customers from database..." />
+          ) : customers.length === 0 ? (
             <EmptyState 
               icon={Users}
               title="No Registered Customers Yet"
@@ -38,7 +67,7 @@ const AdminCustomersPage = () => {
                 </thead>
                 <tbody>
                   {customers.map(c => (
-                    <tr key={c.id}>
+                    <tr key={c.customerId || c.id}>
                       <td><strong>{c.fullName}</strong></td>
                       <td>{c.email}</td>
                       <td>{c.mobileNumber}</td>

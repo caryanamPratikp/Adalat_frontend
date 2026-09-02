@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
-import { Scale, Lock, Mail, AlertCircle, ArrowRight, Eye, EyeOff } from 'lucide-react';
+import { Lock, Mail, AlertCircle, ArrowRight, Eye, EyeOff } from 'lucide-react';
+import loginBg from '../../assets/login_bg.png';
+import logoImg from '../../assets/logo.png';
 import './AuthPages.css';
 
 const LoginPage = () => {
@@ -28,9 +30,7 @@ const LoginPage = () => {
         navigate('/customer/dashboard');
         return;
       }
-    } catch (err) {
-      // Not a customer or customer credentials did not match
-    }
+    } catch (err) {}
 
     // 2. Try Lawyer Login
     try {
@@ -50,9 +50,7 @@ const LoginPage = () => {
         }
         return;
       }
-    } catch (err) {
-      // Not a lawyer or lawyer credentials did not match
-    }
+    } catch (err) {}
 
     // 3. Try Admin Login
     try {
@@ -62,9 +60,7 @@ const LoginPage = () => {
         navigate('/admin/dashboard');
         return;
       }
-    } catch (err) {
-      // Not an admin or admin credentials did not match
-    }
+    } catch (err) {}
 
     // 4. If credentials failed across all roles
     const msg = 'Invalid email address, mobile number, or password. Please verify your credentials.';
@@ -74,77 +70,101 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="auth-page">
-      <div className="container auth-container">
-        <div className="auth-card card">
-          <div className="auth-card-header">
-            <Link to="/" className="auth-brand-logo">
-              <div className="auth-logo-icon"><Scale size={24} /></div>
-              <span className="auth-brand-name">ADALAT</span>
+    <div className="auth-page-full">
+      <div 
+        className="full-register-canvas" 
+        style={{ backgroundImage: `url(${loginBg})` }}
+      >
+        {/* Top-Left Brand Logo & Title Overlay */}
+        <Link to="/" className="top-left-brand-overlay">
+          <img src={logoImg} alt="Adalat Logo" className="top-left-logo-img" />
+          <div className="top-left-brand-text">
+            <span className="top-left-brand-name">ADALAT</span>
+            <span className="top-left-brand-tagline">Justice. Guidance. Connection.</span>
+          </div>
+        </Link>
+
+        {/* Left Side Spacer */}
+        <div className="full-left-spacer" />
+
+        {/* Right Side Form Panel */}
+        <div className="full-right-form-panel">
+          {/* Form Header */}
+          <div className="register-form-header-full">
+            <Link to="/" className="register-brand-header">
+              <img src={logoImg} alt="Adalat Logo" className="register-logo-img" />
+              <div className="register-brand-text">
+                <span className="register-brand-name">ADALAT</span>
+                <span className="register-brand-tagline">Justice. Guidance. Connection.</span>
+              </div>
             </Link>
             <h2>Sign In to Adalat</h2>
-            <p className="auth-subtitle">Enter your registered Email or Mobile Number and Password</p>
+            <p>Enter your registered Email or Mobile Number and Password</p>
           </div>
 
           {error && (
-            <div className="auth-error-alert">
-              <AlertCircle size={18} />
+            <div className="auth-error-alert" style={{ marginBottom: '1rem', background: '#FEF2F2', border: '1px solid #FECACA', color: '#DC2626', padding: '0.65rem 0.85rem', borderRadius: '8px', fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <AlertCircle size={16} />
               <span>{error}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="auth-form">
-            <div className="form-group">
-              <label className="form-label">Email Address or Mobile Number <span className="required">*</span></label>
-              <div className="input-with-icon">
-                <Mail size={18} className="input-icon" />
-                <input 
-                  type="text"
-                  className="form-input"
-                  placeholder="e.g. user@gmail.com or 9876543210"
-                  value={identifier}
-                  onChange={(e) => setIdentifier(e.target.value)}
-                  required
-                />
+          {/* Form Fields */}
+          <form onSubmit={handleSubmit}>
+            <div className="register-form-grid-full" style={{ gridTemplateColumns: '1fr', gap: '1.15rem' }}>
+              <div className="form-group-custom">
+                <label className="form-label-full">Email Address or Mobile Number <span className="required">*</span></label>
+                <div className="input-with-icon-full">
+                  <Mail size={17} className="input-icon-full" />
+                  <input 
+                    type="text"
+                    className="input-full"
+                    placeholder="e.g. user@gmail.com or 9876543210"
+                    value={identifier}
+                    onChange={(e) => setIdentifier(e.target.value)}
+                    required
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="form-group">
-              <label className="form-label">Password <span className="required">*</span></label>
-              <div className="input-with-icon" style={{ position: 'relative' }}>
-                <Lock size={18} className="input-icon" />
-                <input 
-                  type={showPassword ? "text" : "password"}
-                  className="form-input"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  style={{ paddingRight: '2.5rem' }}
-                />
-                <button 
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  style={{ position: 'absolute', right: '0.75rem', top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', color: '#64748B', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0.2rem' }}
-                  title={showPassword ? "Hide Password" : "Show Password"}
-                >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
+              <div className="form-group-custom">
+                <label className="form-label-full">Password <span className="required">*</span></label>
+                <div className="input-with-icon-full">
+                  <Lock size={17} className="input-icon-full" />
+                  <input 
+                    type={showPassword ? "text" : "password"}
+                    className="input-full"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    style={{ paddingRight: '2.5rem' }}
+                  />
+                  <button 
+                    type="button"
+                    className="password-toggle-btn-full"
+                    onClick={() => setShowPassword(!showPassword)}
+                    title={showPassword ? "Hide Password" : "Show Password"}
+                  >
+                    {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+                  </button>
+                </div>
               </div>
             </div>
 
             <button 
               type="submit" 
-              className="btn btn-gold btn-block btn-lg"
+              className="btn-submit-pill-full" 
               disabled={loading}
+              style={{ marginTop: '1rem' }}
             >
-              {loading ? 'Signing In...' : 'Sign In'} <ArrowRight size={18} />
+              {loading ? 'Signing In...' : 'Sign In'} <ArrowRight size={17} />
             </button>
           </form>
 
-          <div className="auth-card-footer" style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-            <p>New Customer? <Link to="/register" className="auth-link">Register Account (₹99)</Link></p>
-            <p>Practicing Advocate? <Link to="/lawyer/register" className="auth-link">Free Lawyer Signup</Link></p>
+          <div className="register-footer-text-full" style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', marginTop: '1.5rem' }}>
+            <p style={{ margin: 0 }}>New Customer? <Link to="/register?type=customer" className="register-footer-link-full">Register Account (₹99)</Link></p>
+            <p style={{ margin: 0 }}>Practicing Advocate? <Link to="/register?type=lawyer" className="register-footer-link-full">Free Lawyer Signup</Link></p>
           </div>
         </div>
       </div>

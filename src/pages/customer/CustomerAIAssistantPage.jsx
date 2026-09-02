@@ -607,8 +607,8 @@ const CustomerAIAssistantPage = () => {
           <button onClick={createNewSession} className="btn btn-gold btn-sm" style={{ padding: '0.45rem 0.95rem', fontSize: '0.82rem', fontWeight: 600 }}>+ New Legal Chat</button>
         </div>
         {sessions.length > 0 && (
-          <div style={{ background: '#09131F', padding: '0.45rem 1.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem', overflowX: 'auto', flexShrink: 0, borderBottom: '2px solid #C9A227' }}>
-            <span style={{ fontSize: '0.72rem', color: '#C9A227', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', marginRight: '0.3rem', flexShrink: 0 }}>
+          <div style={{ background: '#09131F', padding: '0.45rem 1.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem', overflowX: 'auto', flexShrink: 0, borderBottom: '2px solid #5C5C99' }}>
+            <span style={{ fontSize: '0.72rem', color: '#5C5C99', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', marginRight: '0.3rem', flexShrink: 0 }}>
               YOUR SAVED LEGAL CHATS ({sessions.length}):
             </span>
             {sessions.length > 1 && (
@@ -632,7 +632,7 @@ const CustomerAIAssistantPage = () => {
             {sessions.map(s => {
               const isActive = String(s.id) === String(activeSessionId);
               return (
-                <div key={s.id} onClick={() => handleTabSwitch(s)} style={{ background: isActive ? '#C9A227' : '#102A43', color: isActive ? '#102A43' : '#FFFFFF', border: '1px solid #C9A227', padding: '0.25rem 0.65rem 0.25rem 0.75rem', borderRadius: '14px', fontSize: '0.76rem', fontWeight: isActive ? 700 : 500, cursor: 'pointer', whiteSpace: 'nowrap', transition: 'all 0.2s ease', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+                <div key={s.id} onClick={() => handleTabSwitch(s)} style={{ background: isActive ? '#5C5C99' : '#102A43', color: isActive ? '#102A43' : '#FFFFFF', border: '1px solid #5C5C99', padding: '0.25rem 0.65rem 0.25rem 0.75rem', borderRadius: '14px', fontSize: '0.76rem', fontWeight: isActive ? 700 : 500, cursor: 'pointer', whiteSpace: 'nowrap', transition: 'all 0.2s ease', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
                   <span>{s.title || 'Legal Intake'}{s.activeQuestion ? ` (Q${s.activeQuestion.questionNumber || 1}/8)` : s.summary ? ' (✓ Done)' : ''}</span>
                   <span
                     onClick={(e) => deleteSessionTab(s.id, e)}
@@ -661,18 +661,18 @@ const CustomerAIAssistantPage = () => {
             <div style={{ flex: 1, minHeight: 0, padding: '1rem 1.25rem', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.85rem', background: '#F8F6F1' }}>
               {messages.map(msg => (
                 <div key={msg.id} style={{ display: 'flex', flexDirection: 'column', alignItems: msg.sender === 'USER' ? 'flex-end' : 'flex-start' }}>
-                  <div style={{ maxWidth: '82%', padding: msg.isQuestion ? '1rem 1.15rem' : '0.75rem 1rem', borderRadius: '14px', backgroundColor: msg.sender === 'USER' ? '#102A43' : msg.isQuestion ? '#FFFFFF' : msg.isSummaryNotice ? '#ECFDF5' : '#FFFFFF', color: msg.sender === 'USER' ? '#FFFFFF' : msg.isSummaryNotice ? '#065F46' : '#102A43', border: msg.isQuestion ? '2px solid #C9A227' : msg.isSummaryNotice ? '1px solid #10B981' : msg.sender === 'BOT' ? '1px solid #E2E8F0' : 'none', fontSize: '0.88rem', lineHeight: '1.5', boxShadow: msg.isQuestion ? '0 4px 12px rgba(201, 162, 39, 0.15)' : '0 1px 2px rgba(0,0,0,0.05)' }}>
-                    {msg.sender === 'BOT' && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}><span style={{ fontSize: '0.7rem', color: '#C9A227', fontWeight: 700, letterSpacing: '0.5px' }}>ADALAT AI LEGAL COUNSELOR</span>{msg.isQuestion && <span style={{ background: 'rgba(201, 162, 39, 0.15)', color: '#B08B1E', fontSize: '0.68rem', fontWeight: 700, padding: '0.15rem 0.5rem', borderRadius: '10px' }}>QUESTION {msg.questionNumber || 1} OF {msg.totalQuestions || 8}</span>}</div>}
+                  <div style={{ maxWidth: '82%', padding: msg.isQuestion ? '1rem 1.15rem' : '0.75rem 1rem', borderRadius: '14px', backgroundColor: msg.sender === 'USER' ? '#102A43' : msg.isQuestion ? '#FFFFFF' : msg.isSummaryNotice ? '#ECFDF5' : '#FFFFFF', color: msg.sender === 'USER' ? '#FFFFFF' : msg.isSummaryNotice ? '#065F46' : '#102A43', border: msg.isQuestion ? '2px solid #5C5C99' : msg.isSummaryNotice ? '1px solid #10B981' : msg.sender === 'BOT' ? '1px solid #E2E8F0' : 'none', fontSize: '0.88rem', lineHeight: '1.5', boxShadow: msg.isQuestion ? '0 4px 12px rgba(201, 162, 39, 0.15)' : '0 1px 2px rgba(0,0,0,0.05)' }}>
+                    {msg.sender === 'BOT' && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}><span style={{ fontSize: '0.7rem', color: '#5C5C99', fontWeight: 700, letterSpacing: '0.5px' }}>ADALAT AI LEGAL COUNSELOR</span>{msg.isQuestion && <span style={{ background: 'rgba(201, 162, 39, 0.15)', color: '#45457a', fontSize: '0.68rem', fontWeight: 700, padding: '0.15rem 0.5rem', borderRadius: '10px' }}>QUESTION {msg.questionNumber || 1} OF {msg.totalQuestions || 8}</span>}</div>}
                     <p style={{ margin: 0, fontWeight: msg.isQuestion ? 600 : 400, color: msg.sender === 'USER' ? '#FFFFFF' : '#1F2937', whiteSpace: 'pre-line' }}>{msg.text}</p>
                     {msg.isSummaryNotice && (
                       <div style={{ marginTop: '0.85rem', display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
                         {/* Generated File Document Card */}
                         <div 
                           onClick={() => setShowAssessmentModal(true)} 
-                          style={{ background: '#FFFFFF', padding: '0.85rem 1rem', borderRadius: '12px', border: '1.5px solid #C9A227', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer', boxShadow: '0 3px 10px rgba(201, 162, 39, 0.15)', transition: 'all 0.2s ease' }}
+                          style={{ background: '#FFFFFF', padding: '0.85rem 1rem', borderRadius: '12px', border: '1.5px solid #5C5C99', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer', boxShadow: '0 3px 10px rgba(201, 162, 39, 0.15)', transition: 'all 0.2s ease' }}
                         >
                           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                            <div style={{ background: '#FEF3C7', color: '#B08B1E', padding: '0.6rem', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <div style={{ background: '#FEF3C7', color: '#45457a', padding: '0.6rem', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                               <FileCheck size={24} />
                             </div>
                             <div>
@@ -706,14 +706,14 @@ const CustomerAIAssistantPage = () => {
                                 const categoryTag = lawyer.practiceAreas ? (Array.isArray(lawyer.practiceAreas) ? lawyer.practiceAreas.map(p => String(p).replace(/_/g, ' ')).join(', ') : String(lawyer.practiceAreas)) : (activeCategoryLabel || 'Legal Specialist');
                                 
                                 return (
-                                  <div key={lawyer.lawyerId || lawyer.id} style={{ border: '1.5px solid #C9A227', borderRadius: '12px', padding: '0.85rem 1rem', background: '#FFFFFF', display: 'flex', flexDirection: 'column', gap: '0.45rem', boxShadow: '0 2px 6px rgba(0,0,0,0.03)' }}>
+                                  <div key={lawyer.lawyerId || lawyer.id} style={{ border: '1.5px solid #5C5C99', borderRadius: '12px', padding: '0.85rem 1rem', background: '#FFFFFF', display: 'flex', flexDirection: 'column', gap: '0.45rem', boxShadow: '0 2px 6px rgba(0,0,0,0.03)' }}>
                                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                       <strong style={{ fontSize: '0.92rem', color: '#102A43' }}>{lawyer.fullName}</strong>
                                       <span className="badge badge-gold" style={{ fontSize: '0.74rem', fontWeight: 700, padding: '0.2rem 0.6rem' }}>
                                         ⭐ {scorePct}% Match
                                       </span>
                                     </div>
-                                    <div style={{ fontSize: '0.72rem', color: '#B08B1E', fontWeight: 700, textTransform: 'uppercase' }}>
+                                    <div style={{ fontSize: '0.72rem', color: '#45457a', fontWeight: 700, textTransform: 'uppercase' }}>
                                       🏷️ Category: {categoryTag}
                                     </div>
                                     <div style={{ fontSize: '0.76rem', color: '#64748B' }}>
@@ -748,10 +748,10 @@ const CustomerAIAssistantPage = () => {
 
                     {msg.isGreeting && !activeQuestion && !summary && (
                       <div style={{ marginTop: '0.85rem' }}>
-                        <p style={{ fontSize: '0.78rem', fontWeight: 700, color: '#C9A227', marginBottom: '0.5rem' }}>SELECT A CATEGORY TO BEGIN QUESTIONNAIRE:</p>
+                        <p style={{ fontSize: '0.78rem', fontWeight: 700, color: '#5C5C99', marginBottom: '0.5rem' }}>SELECT A CATEGORY TO BEGIN QUESTIONNAIRE:</p>
                         <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap' }}>
                           {CATEGORIES.map(cat => (
-                            <button key={cat.key} onClick={() => startCategoryQuestionnaire(cat.key, cat.label)} style={{ background: '#F8FAFC', border: '1px solid #C9A227', color: '#102A43', fontSize: '0.78rem', fontWeight: 600, padding: '0.35rem 0.75rem', borderRadius: '12px', cursor: 'pointer' }}>
+                            <button key={cat.key} onClick={() => startCategoryQuestionnaire(cat.key, cat.label)} style={{ background: '#F8FAFC', border: '1px solid #5C5C99', color: '#102A43', fontSize: '0.78rem', fontWeight: 600, padding: '0.35rem 0.75rem', borderRadius: '12px', cursor: 'pointer' }}>
                               {cat.label}
                             </button>
                           ))}
@@ -762,7 +762,7 @@ const CustomerAIAssistantPage = () => {
                     {msg.isQuestion && (
                       <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginTop: '0.75rem' }}>
                         {extractQuestionOptions(msg.text, activeCategoryKey).map((opt, idx) => (
-                          <button key={idx} onClick={() => processUserAnswer(opt)} style={{ background: '#F8FAFC', border: '1px solid #C9A227', color: '#102A43', fontSize: '0.78rem', fontWeight: 600, padding: '0.35rem 0.75rem', borderRadius: '12px', cursor: 'pointer' }}>
+                          <button key={idx} onClick={() => processUserAnswer(opt)} style={{ background: '#F8FAFC', border: '1px solid #5C5C99', color: '#102A43', fontSize: '0.78rem', fontWeight: 600, padding: '0.35rem 0.75rem', borderRadius: '12px', cursor: 'pointer' }}>
                             {opt}
                           </button>
                         ))}
@@ -822,10 +822,10 @@ const CustomerAIAssistantPage = () => {
       {/* AI Case Assessment File Report Popup Modal */}
       {showAssessmentModal && (
         <div className="modal-overlay" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(9, 19, 31, 0.75)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1rem' }}>
-          <div style={{ background: '#FFFFFF', borderRadius: '16px', maxWidth: '650px', width: '100%', maxHeight: '85vh', display: 'flex', flexDirection: 'column', boxShadow: '0 20px 40px rgba(0,0,0,0.3)', border: '2px solid #C9A227', overflow: 'hidden' }}>
-            <div style={{ padding: '1.15rem 1.5rem', background: '#102A43', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '2px solid #C9A227' }}>
+          <div style={{ background: '#FFFFFF', borderRadius: '16px', maxWidth: '650px', width: '100%', maxHeight: '85vh', display: 'flex', flexDirection: 'column', boxShadow: '0 20px 40px rgba(0,0,0,0.3)', border: '2px solid #5C5C99', overflow: 'hidden' }}>
+            <div style={{ padding: '1.15rem 1.5rem', background: '#102A43', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '2px solid #5C5C99' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                <FileCheck size={22} style={{ color: '#C9A227' }} />
+                <FileCheck size={22} style={{ color: '#5C5C99' }} />
                 <div>
                   <h3 style={{ margin: 0, fontSize: '1.05rem', color: '#FFFFFF', fontFamily: 'Cinzel, serif' }}>AI Case Assessment Report</h3>
                   <span style={{ fontSize: '0.72rem', color: '#94A3B8' }}>Ref #{activeSessionId || '54'} • Verified 8/8 Intake Complete</span>

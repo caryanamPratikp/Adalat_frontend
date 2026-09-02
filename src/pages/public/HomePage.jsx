@@ -1,448 +1,277 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import LawyerCard from '../../components/LawyerCard';
-import LoadingState from '../../components/LoadingState';
-import { lawyerApi } from '../../api/lawyerApi';
 import { 
   Scale, ShieldCheck, Clock, Users, ArrowRight, Bot, CheckCircle, 
-  Search, MessageSquare, CreditCard, Star, Award, Heart, Home, 
-  ShieldAlert, Lock, Briefcase, Building, Car, ShoppingBag, 
-  Zap, Globe, TrendingUp 
+  Search, MessageSquare, CreditCard, Star, Award, ShieldAlert, Lock, 
+  Briefcase, Building, Car, ShoppingBag, Zap, Globe, FileText, Phone, Mail, MapPin
 } from 'lucide-react';
 import './HomePage.css';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const [featuredLawyers, setFeaturedLawyers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [activeTopic, setActiveTopic] = useState(0);
+  const [selectedIssue, setSelectedIssue] = useState('Property & Real Estate Law');
+  const [issueDescription, setIssueDescription] = useState('');
 
-  const sampleTopics = [
-    {
-      id: 'property',
-      label: 'Property Dispute',
-      query: 'Tenant refusing to vacate commercial property despite lease expiry notice.',
-      category: 'Property & Real Estate Law',
-      matchedLawyer: 'Adv. Vikramaditya Sen',
-      exp: '18 Yrs Experience',
-      court: 'Delhi High Court'
-    },
-    {
-      id: 'family',
-      label: 'Divorce & Custody',
-      query: 'Mutual consent divorce legal timeline and child custody arrangement terms.',
-      category: 'Divorce & Family Law',
-      matchedLawyer: 'Adv. Meenakshi Rao',
-      exp: '14 Yrs Experience',
-      court: 'Bombay High Court'
-    },
-    {
-      id: 'criminal',
-      label: 'Bail & FIR Defense',
-      query: 'Urgent anticipatory bail filing in High Court under section 420 IPC matter.',
-      category: 'Criminal Defense Law',
-      matchedLawyer: 'Adv. Rajeshwar Tyagi',
-      exp: '22 Yrs Experience',
-      court: 'Supreme Court of India'
-    },
-    {
-      id: 'cyber',
-      label: 'Online Fraud',
-      query: 'Unauthorized net-banking withdrawal & cyber police complaint procedure.',
-      category: 'Cyber Crime & IT Law',
-      matchedLawyer: 'Adv. Ananya Deshmukh',
-      exp: '10 Yrs Experience',
-      court: 'Karnataka High Court'
-    }
-  ];
-
-  useEffect(() => {
-    const fetchLawyers = async () => {
-      try {
-        const response = await lawyerApi.getApprovedLawyers();
-        const raw = response && response.data ? (response.data.data || response.data) : [];
-        if (Array.isArray(raw)) {
-          setFeaturedLawyers(raw.slice(0, 6));
-        }
-      } catch (error) {
-        console.error('Failed to fetch lawyers:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchLawyers();
-  }, []);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-    );
-    
-    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
-    
-    return () => observer.disconnect();
-  }, []);
-
-  const handleAiAssistantClick = () => {
-    navigate('/customer/legal-assistant');
+  const handleStartConsultation = (e) => {
+    e.preventDefault();
+    navigate(`/customer/legal-assistant?issue=${encodeURIComponent(selectedIssue)}`);
   };
 
   const categories = [
-    { icon: <ShieldAlert size={28} />, name: 'Criminal Law', count: '140+', desc: 'Bail, FIRs, cybercrime, and criminal defense.' },
-    { icon: <Heart size={28} />, name: 'Divorce & Family', count: '210+', desc: 'Mutual divorce, alimony, child custody.' },
-    { icon: <Home size={28} />, name: 'Property Law', count: '185+', desc: 'Property disputes, verification, tenant issues.' },
-    { icon: <Scale size={28} />, name: 'Civil Law', count: '320+', desc: 'Contracts, recovery, civil disputes.' },
-    { icon: <ShoppingBag size={28} />, name: 'Consumer Law', count: '95+', desc: 'Defective products, service deficiency.' },
-    { icon: <Lock size={28} />, name: 'Cyber Law', count: '65+', desc: 'Online fraud, data breach, harassment.' },
-    { icon: <Briefcase size={28} />, name: 'Employment Law', count: '110+', desc: 'Wrongful termination, PF, unpaid salary.' },
-    { icon: <Building size={28} />, name: 'Corporate Law', count: '150+', desc: 'Startup compliance, IP, agreements.' },
-    { icon: <CreditCard size={28} />, name: 'Banking & Finance', count: '85+', desc: 'Cheque bounce, loan disputes.' },
-    { icon: <Car size={28} />, name: 'Motor Vehicle', count: '120+', desc: 'Accident claims, challans, insurance.' },
+    { icon: <ShieldAlert size={24} />, name: 'Criminal Law', desc: 'Bail, FIR, Trials, Appeals and more' },
+    { icon: <Users size={24} />, name: 'Family Law', desc: 'Divorce, Child Custody, Maintenance' },
+    { icon: <Building size={24} />, name: 'Property Law', desc: 'Property Disputes, Documentation' },
+    { icon: <Scale size={24} />, name: 'Civil Law', desc: 'Contracts, Recovery, Disputes' },
+    { icon: <ShoppingBag size={24} />, name: 'Consumer Law', desc: 'Consumer Rights, Complaints' },
+    { icon: <Lock size={24} />, name: 'Cyber Law', desc: 'Cyber Crimes, Online Frauds' },
+    { icon: <Briefcase size={24} />, name: 'Employment Law', desc: 'Workplace Issues, Labour Disputes' },
+    { icon: <Globe size={24} />, name: 'Corporate Law', desc: 'Company Matters, Legal Compliance' },
+    { icon: <CreditCard size={24} />, name: 'Tax Law', desc: 'Tax Notices, Returns, Tax Disputes' },
+    { icon: <FileText size={24} />, name: 'Documentation', desc: 'Agreements, Affidavits, Legal Notices' },
   ];
 
   return (
     <div className="homepage-container">
-      {/* 1. HERO SECTION */}
+      {/* 1. HERO SECTION — Full BG Video with Gradient Overlay */}
       <section className="hero-section">
-        <div className="hero-orb orb-1"></div>
-        <div className="hero-orb orb-2"></div>
-        <div className="hero-orb orb-3"></div>
-        
+        <video 
+          className="hero-video-bg" 
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+        >
+          <source src="/videos/hero-bg.mp4" type="video/mp4" />
+        </video>
+        {/* Overlay gradient: solid purple on left for text, fading on right so scales video shows */}
+        <div className="hero-overlay" />
+
         <div className="hero-content-wrapper">
-          <div className="hero-left animate-on-scroll slide-up">
-            <div className="hero-badge">
-              <Award size={16} className="badge-icon" />
-              <span>Supreme Court & High Court Advocates Network</span>
+          {/* Hero Left — Text Content */}
+          <div className="hero-left">
+            <div className="hero-top-badge">
+              <Scale size={16} />
+              <span>India's Trusted Legal Consultation Platform</span>
             </div>
-            
+
             <h1 className="hero-title">
-              Instant Legal Consultation with <span>Verified Advocates</span> Across India
+              INSTANT LEGAL<br />
+              CONSULTATION WITH<br />
+              <span className="highlight-lavender">VERIFIED ADVOCATES</span><br />
+              ACROSS INDIA
             </h1>
             
             <p className="hero-subtitle">
-              Get clarity on your legal matters instantly. Connect with expert lawyers 
-              for a 10-minute free consultation, guided by our advanced AI assistant.
+              Connect with experienced lawyers for online consultation, case guidance, and legal support from the comfort of your home.
             </p>
             
             <div className="hero-actions">
-              <Link to="/register?type=customer" className="btn-primary-glow">
-                Register for ₹99
-                <ArrowRight size={18} />
+              <Link to="/register?type=customer" className="btn-primary-purple">
+                Speak to a Lawyer <ArrowRight size={18} />
               </Link>
-              <Link to="/find-lawyer" className="btn-outline-light">
-                Browse Advocates
-                <Search size={18} />
+              <Link to="/how-it-works" className="btn-outline-hero">
+                How It Works
               </Link>
             </div>
             
-            <div className="hero-stats">
-              <div className="stat-item">
-                <Clock size={20} />
-                <span>10 Mins FREE</span>
-              </div>
-              <div className="stat-divider"></div>
-              <div className="stat-item">
-                <ShieldCheck size={20} />
-                <span>100% Verified</span>
-              </div>
-              <div className="stat-divider"></div>
-              <div className="stat-item">
-                <CreditCard size={20} />
-                <span>₹99 Fee</span>
-              </div>
+            <div className="trust-pills-row">
+              <div className="trust-pill"><ShieldCheck size={16} /> Verified Advocates</div>
+              <div className="trust-pill"><Lock size={16} /> Secure & Private</div>
+              <div className="trust-pill"><Zap size={16} /> Quick Response</div>
+              <div className="trust-pill"><CreditCard size={16} /> Affordable Fees</div>
             </div>
           </div>
           
-          {/* Hero Right: Interactive Legal AI Match Showcase */}
-          <div className="hero-right animate-on-scroll slide-up" style={{ transitionDelay: '0.2s' }}>
-            <div className="hero-showcase-container">
-              {/* Floating Top Badge */}
-              <div className="floating-glass-pill pill-top">
-                <ShieldCheck size={16} className="pill-gold-icon" />
-                <span>100% Bar Council Verified</span>
-              </div>
-
-              {/* Main Interactive Showcase Card */}
-              <div className="hero-hub-card">
-                <div className="hub-card-header">
-                  <div className="hub-bot-badge">
-                    <Bot size={22} />
-                    <span className="pulse-dot"></span>
-                  </div>
-                  <div>
-                    <h3 className="hub-title">Smart Legal Assistant</h3>
-                    <span className="hub-subtitle-text">Instant AI Matching & 10-Min Free Chat</span>
-                  </div>
-                </div>
-
-                <div className="hub-topic-chips">
-                  <button 
-                    className={`topic-chip ${activeTopic === 0 ? 'active' : ''}`}
-                    onClick={() => setActiveTopic(0)}
-                  >
-                    <Home size={14} /> Property
-                  </button>
-                  <button 
-                    className={`topic-chip ${activeTopic === 1 ? 'active' : ''}`}
-                    onClick={() => setActiveTopic(1)}
-                  >
-                    <Heart size={14} /> Family
-                  </button>
-                  <button 
-                    className={`topic-chip ${activeTopic === 2 ? 'active' : ''}`}
-                    onClick={() => setActiveTopic(2)}
-                  >
-                    <ShieldAlert size={14} /> Criminal
-                  </button>
-                  <button 
-                    className={`topic-chip ${activeTopic === 3 ? 'active' : ''}`}
-                    onClick={() => setActiveTopic(3)}
-                  >
-                    <Lock size={14} /> Cyber Crime
-                  </button>
-                </div>
-
-                {/* Active Case Query Preview Box */}
-                <div className="query-preview-container" onClick={handleAiAssistantClick}>
-                  <div className="query-preview-header">
-                    <span className="query-tag">Sample Issue</span>
-                    <span className="query-arrow"><Zap size={14} /> Auto-Detect</span>
-                  </div>
-                  <p className="query-text">"{sampleTopics[activeTopic].query}"</p>
-                </div>
-
-                {/* Matched Advocate Card Preview */}
-                <div className="matched-advocate-preview">
-                  <div className="advocate-avatar-box">
-                    <Scale size={20} />
-                  </div>
-                  <div className="advocate-info">
-                    <div className="advocate-name-row">
-                      <h4>{sampleTopics[activeTopic].matchedLawyer}</h4>
-                      <span className="rating-badge"><Star size={12} fill="#EAB308" color="#EAB308" /> 4.9</span>
-                    </div>
-                    <p className="advocate-meta">{sampleTopics[activeTopic].court} • {sampleTopics[activeTopic].exp}</p>
-                    <span className="category-pill">{sampleTopics[activeTopic].category}</span>
-                  </div>
-                </div>
-
-                {/* CTA Action */}
-                <button className="btn-hub-action" onClick={handleAiAssistantClick}>
-                  Consult Advocate Free (10 Mins)
-                  <ArrowRight size={18} />
-                </button>
-              </div>
-
-              {/* Floating Bottom Badge */}
-              <div className="floating-glass-pill pill-bottom">
-                <Clock size={16} className="pill-gold-icon" />
-                <span>Response Time &lt; 2 Mins</span>
-              </div>
-            </div>
-          </div>
+          {/* Hero Right — intentionally empty so the BG image (scales & gavel) shows through */}
+          <div className="hero-right-spacer" />
         </div>
+
       </section>
 
-      {/* 2. TRUSTED BY SECTION */}
-      <section className="trusted-section">
-        <div className="marquee-container">
-          <div className="marquee-content">
-            <div className="trust-badge"><ShieldCheck size={20} /> Bar Council Verified</div>
-            <div className="trust-badge"><Lock size={20} /> SSL Encrypted</div>
-            <div className="trust-badge"><Building size={20} /> DPIIT Registered</div>
-            <div className="trust-badge"><Users size={20} /> 1000+ Consultations</div>
-            <div className="trust-badge"><Bot size={20} /> 24/7 AI Support</div>
-            {/* Duplicate for seamless looping */}
-            <div className="trust-badge"><ShieldCheck size={20} /> Bar Council Verified</div>
-            <div className="trust-badge"><Lock size={20} /> SSL Encrypted</div>
-            <div className="trust-badge"><Building size={20} /> DPIIT Registered</div>
-            <div className="trust-badge"><Users size={20} /> 1000+ Consultations</div>
-            <div className="trust-badge"><Bot size={20} /> 24/7 AI Support</div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. HOW IT WORKS SECTION */}
+      {/* 2. HOW ADALAT WORKS SECTION */}
       <section className="how-it-works-section">
-        <div className="section-header animate-on-scroll slide-up">
-          <h2>How Adalat Works</h2>
-          <p>Get legal resolution in four simple steps</p>
-          <div className="accent-line"></div>
+        <div className="section-title-wrapper">
+          <h2>HOW ADALAT WORKS</h2>
+          <div className="slate-divider"><span>◆</span></div>
         </div>
         
-        <div className="steps-grid">
-          <div className="step-card animate-on-scroll slide-up">
-            <div className="step-number">01</div>
-            <div className="step-icon"><CreditCard size={32} /></div>
-            <h3>Activate Account</h3>
-            <p>Pay a nominal one-time registration fee of ₹99 to activate your account and prevent spam.</p>
+        <div className="steps-grid-mockup">
+          <div className="step-card-mockup">
+            <span className="step-number-tag">01</span>
+            <div className="step-icon-purple"><MessageSquare size={24} /></div>
+            <h3>Describe Your Issue</h3>
+            <p>Share your legal concern in a few simple steps and get started.</p>
           </div>
           
-          <div className="step-card animate-on-scroll slide-up" style={{ transitionDelay: '0.1s' }}>
-            <div className="step-number">02</div>
-            <div className="step-icon"><Bot size={32} /></div>
-            <h3>AI Categorization</h3>
-            <p>Describe your issue to our AI. It instantly analyzes and categorizes your specific legal need.</p>
+          <div className="step-card-mockup">
+            <span className="step-number-tag">02</span>
+            <div className="step-icon-purple"><Search size={24} /></div>
+            <h3>Get Matched Instantly</h3>
+            <p>We match you with the best advocate for your specific issue.</p>
           </div>
           
-          <div className="step-card animate-on-scroll slide-up" style={{ transitionDelay: '0.2s' }}>
-            <div className="step-number">03</div>
-            <div className="step-icon"><MessageSquare size={32} /></div>
-            <h3>10-Min Free Chat</h3>
-            <p>Connect with a matched specialist advocate for a free 10-minute introductory consultation.</p>
+          <div className="step-card-mockup">
+            <span className="step-number-tag">03</span>
+            <div className="step-icon-purple"><Bot size={24} /></div>
+            <h3>Consult Online</h3>
+            <p>Connect via chat, call, or video and get expert legal advice.</p>
           </div>
           
-          <div className="step-card animate-on-scroll slide-up" style={{ transitionDelay: '0.3s' }}>
-            <div className="step-number">04</div>
-            <div className="step-icon"><Scale size={32} /></div>
-            <h3>Extend or Appoint</h3>
-            <p>Choose to extend the consultation at the lawyer's standard rate or formally appoint them.</p>
+          <div className="step-card-mockup">
+            <span className="step-number-tag">04</span>
+            <div className="step-icon-purple"><FileText size={24} /></div>
+            <h3>Get Legal Solutions</h3>
+            <p>Receive practical legal guidance and next steps for your case.</p>
           </div>
         </div>
       </section>
 
-      {/* 4. LEGAL CATEGORIES SECTION */}
-      <section className="categories-section bg-light">
-        <div className="section-header animate-on-scroll slide-up">
-          <h2>Find Specialized Advocates</h2>
-          <p>Expert legal representation across all major practice areas</p>
-          <div className="accent-line"></div>
+      {/* 3. FIND SPECIALIZED ADVOCATES SECTION */}
+      <section className="categories-section-purple">
+        <div className="section-title-wrapper">
+          <h2>FIND SPECIALIZED ADVOCATES</h2>
+          <p className="section-subtitle">Choose from expert advocates in every legal field</p>
         </div>
         
-        <div className="categories-grid">
+        <div className="categories-grid-mockup">
           {categories.map((cat, index) => (
             <div 
               key={index} 
-              className="category-card animate-on-scroll slide-up" 
-              style={{ transitionDelay: `${index * 0.05}s` }}
+              className="category-card-mockup"
               onClick={() => navigate('/find-lawyer')}
             >
-              <div className="category-icon-wrapper">
+              <div className="category-icon-purple">
                 {cat.icon}
               </div>
-              <div className="category-content">
-                <h4>{cat.name}</h4>
-                <span className="category-count">{cat.count} Advocates</span>
-                <p>{cat.desc}</p>
-              </div>
+              <h4>{cat.name}</h4>
+              <p>{cat.desc}</p>
             </div>
           ))}
         </div>
         
-        <div className="text-center mt-4 animate-on-scroll slide-up">
-          <Link to="/find-lawyer" className="btn-secondary">
+        <div className="text-center-btn">
+          <Link to="/find-lawyer" className="btn-solid-purple">
             View All Categories
           </Link>
         </div>
       </section>
 
-      {/* 5. WHY CHOOSE ADALAT SECTION */}
-      <section className="why-choose-section">
-        <div className="section-header animate-on-scroll slide-up">
-          <h2>Why Choose Adalat</h2>
-          <p>We're redefining how Indians access legal services</p>
-          <div className="accent-line"></div>
+      {/* 4. WHY CHOOSE ADALAT SECTION */}
+      <section className="why-choose-section-purple">
+        <div className="section-title-wrapper">
+          <h2>WHY CHOOSE ADALAT</h2>
+          <p className="section-subtitle">We make legal help simple, accessible and trusted</p>
         </div>
         
-        <div className="features-grid">
-          <div className="feature-card animate-on-scroll slide-up">
-            <div className="feature-icon"><ShieldCheck size={40} /></div>
-            <h3>100% Bar Council Verified</h3>
-            <p>Every advocate on our platform goes through a rigorous verification process checking their Bar Council credentials and practice history.</p>
+        <div className="features-grid-mockup">
+          <div className="feature-card-mockup">
+            <div className="circle-icon-purple"><ShieldCheck size={32} /></div>
+            <h3>100% VERIFIED ADVOCATES</h3>
+            <p>All advocates are verified professionals with valid enrollment and experience.</p>
           </div>
           
-          <div className="feature-card animate-on-scroll slide-up" style={{ transitionDelay: '0.1s' }}>
-            <div className="feature-icon"><Clock size={40} /></div>
-            <h3>10-Min Free Consultation</h3>
-            <p>Don't pay blindly. Get a complimentary 10-minute session to explain your case and gauge the lawyer's expertise before committing.</p>
+          <div className="feature-card-mockup">
+            <div className="circle-icon-purple"><Clock size={32} /></div>
+            <h3>INSTANT CONSULTATION</h3>
+            <p>Get connected with lawyers instantly. No long waiting, no hassle.</p>
           </div>
           
-          <div className="feature-card animate-on-scroll slide-up" style={{ transitionDelay: '0.2s' }}>
-            <div className="feature-icon"><Zap size={40} /></div>
-            <h3>AI-Powered Legal Matching</h3>
-            <p>Our intelligent system understands the nuances of your case and connects you with advocates who specialize exactly in your required field.</p>
+          <div className="feature-card-mockup">
+            <div className="circle-icon-purple"><CreditCard size={32} /></div>
+            <h3>AFFORDABLE PRICING</h3>
+            <p>Transparent pricing with no hidden charges. Quality legal help for all.</p>
+          </div>
+
+          <div className="feature-card-mockup">
+            <div className="circle-icon-purple"><Lock size={32} /></div>
+            <h3>SECURE & PRIVATE</h3>
+            <p>Your information and conversations are 100% secure and confidential.</p>
           </div>
         </div>
       </section>
 
-
-
-      {/* 7. TESTIMONIALS SECTION */}
-      <section className="testimonials-section">
-        <div className="section-header">
-          <h2>Client Success Stories</h2>
-          <p>Real experiences from people who found justice through Adalat</p>
-          <div className="accent-line"></div>
+      {/* 5. CLIENT SUCCESS STORIES */}
+      <section className="testimonials-section-purple">
+        <div className="section-title-wrapper">
+          <h2>CLIENT SUCCESS STORIES</h2>
+          <p className="section-subtitle">Real people. Real solutions.</p>
         </div>
         
-        <div className="testimonials-grid">
-          <div className="testimonial-card">
-            <div className="stars">
-              <Star size={16} fill="#C9A227" color="#C9A227" />
-              <Star size={16} fill="#C9A227" color="#C9A227" />
-              <Star size={16} fill="#C9A227" color="#C9A227" />
-              <Star size={16} fill="#C9A227" color="#C9A227" />
-              <Star size={16} fill="#C9A227" color="#C9A227" />
+        <div className="testimonials-grid-mockup">
+          <div className="testimonial-card-mockup">
+            <span className="quote-mark">“</span>
+            <div className="stars-row">
+              <Star size={14} fill="#5C5C99" color="#5C5C99" />
+              <Star size={14} fill="#5C5C99" color="#5C5C99" />
+              <Star size={14} fill="#5C5C99" color="#5C5C99" />
+              <Star size={14} fill="#5C5C99" color="#5C5C99" />
+              <Star size={14} fill="#5C5C99" color="#5C5C99" />
             </div>
-            <p className="quote">"Adalat helped me resolve my property dispute within 2 weeks. The AI matching was incredibly accurate, and the 10-minute free chat gave me confidence in my lawyer."</p>
-            <div className="author">
-              <h4>Priya Sharma</h4>
-              <span>Business Owner</span>
-            </div>
-          </div>
-          
-          <div className="testimonial-card">
-            <div className="stars">
-              <Star size={16} fill="#C9A227" color="#C9A227" />
-              <Star size={16} fill="#C9A227" color="#C9A227" />
-              <Star size={16} fill="#C9A227" color="#C9A227" />
-              <Star size={16} fill="#C9A227" color="#C9A227" />
-              <Star size={16} fill="#C9A227" color="#C9A227" />
-            </div>
-            <p className="quote">"Finding a good corporate lawyer for my startup was daunting until I found Adalat. The ₹99 fee is nothing compared to the quality of verified advocates available."</p>
-            <div className="author">
-              <h4>Rahul Verma</h4>
-              <span>Tech Entrepreneur</span>
+            <p className="testimonial-text">"Adalat helped me connect with a great lawyer for my property dispute. The advice was clear and saved me a lot of time and money."</p>
+            <div className="client-info">
+              <strong>Sahil Sharma</strong>
+              <span>Property Dispute</span>
             </div>
           </div>
           
-          <div className="testimonial-card">
-            <div className="stars">
-              <Star size={16} fill="#C9A227" color="#C9A227" />
-              <Star size={16} fill="#C9A227" color="#C9A227" />
-              <Star size={16} fill="#C9A227" color="#C9A227" />
-              <Star size={16} fill="#C9A227" color="#C9A227" />
-              <Star size={16} color="#C9A227" />
+          <div className="testimonial-card-mockup">
+            <span className="quote-mark">“</span>
+            <div className="stars-row">
+              <Star size={14} fill="#5C5C99" color="#5C5C99" />
+              <Star size={14} fill="#5C5C99" color="#5C5C99" />
+              <Star size={14} fill="#5C5C99" color="#5C5C99" />
+              <Star size={14} fill="#5C5C99" color="#5C5C99" />
+              <Star size={14} fill="#5C5C99" color="#5C5C99" />
             </div>
-            <p className="quote">"I was confused about my consumer rights against a major e-commerce brand. The AI assistant guided me perfectly and connected me with an expert who sent a legal notice instantly."</p>
-            <div className="author">
-              <h4>Anjali Desai</h4>
-              <span>Marketing Professional</span>
+            <p className="testimonial-text">"Very quick response and professional lawyers. I got the right guidance for my divorce case and the process became much easier."</p>
+            <div className="client-info">
+              <strong>Neha Verma</strong>
+              <span>Family Law</span>
+            </div>
+          </div>
+          
+          <div className="testimonial-card-mockup">
+            <span className="quote-mark">“</span>
+            <div className="stars-row">
+              <Star size={14} fill="#5C5C99" color="#5C5C99" />
+              <Star size={14} fill="#5C5C99" color="#5C5C99" />
+              <Star size={14} fill="#5C5C99" color="#5C5C99" />
+              <Star size={14} fill="#5C5C99" color="#5C5C99" />
+              <Star size={14} fill="#5C5C99" color="#5C5C99" />
+            </div>
+            <p className="testimonial-text">"Excellent platform! The lawyer understood my issue and guided me step by step. Highly recommend Adalat for legal help."</p>
+            <div className="client-info">
+              <strong>Amit Kumar</strong>
+              <span>Criminal Case</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 8. CTA BANNER SECTION */}
-      <section className="cta-banner-section">
-        <div className="cta-content animate-on-scroll scale-up">
-          <h2>Ready to Get Legal Guidance?</h2>
-          <p>Join thousands of Indians who have found the right legal support through Adalat.</p>
-          <div className="cta-actions">
-            <Link to="/register?type=customer" className="btn-primary-glow">
-              Register Now
-            </Link>
-            <Link to="/register?type=lawyer" className="btn-outline-light">
-              For Advocates (Join Free)
-            </Link>
+      {/* 6. READY TO GET LEGAL GUIDANCE BANNER (Below Client Success Stories) */}
+      <section className="cta-rounded-section">
+        <div className="cta-rounded-card">
+          <video 
+            className="cta-video-bg" 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+          >
+            <source src="/videos/hero-bg.mp4" type="video/mp4" />
+          </video>
+          <div className="cta-card-overlay" />
+          <div className="cta-card-content">
+            <h2 className="cta-card-title">READY TO GET LEGAL GUIDANCE?</h2>
+            <p className="cta-card-subtitle">Join thousands of people who've resolved their legal issues with Adalat.</p>
+            <div className="cta-card-buttons">
+              <Link to="/register?type=customer" className="btn-cta-white-pill">
+                Talk to a Lawyer Now <ArrowRight size={18} />
+              </Link>
+              <Link to="/register?type=lawyer" className="btn-cta-outline-pill">
+                For Advocates: Join Now
+              </Link>
+            </div>
           </div>
         </div>
       </section>

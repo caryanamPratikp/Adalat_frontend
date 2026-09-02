@@ -1,31 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Scale, ShieldCheck, Mail, Phone, MapPin, ArrowUpRight, Heart } from 'lucide-react';
+import { Mail, Phone, MapPin } from 'lucide-react';
+import logoImg from '../assets/logo.png';
 import './Footer.css';
 
 const Footer = () => {
   return (
     <footer className="adalat-footer">
-      {/* CTA Section */}
-      <div className="footer-cta-section">
-        <div className="footer-cta-content">
-          <div className="cta-text">
-            <h2>Ready for Legal Guidance?</h2>
-            <p>Connect with top legal professionals across India today.</p>
-          </div>
-          <Link to="/register" className="footer-cta-btn">
-            Get Started <ArrowUpRight size={18} />
-          </Link>
-        </div>
-      </div>
-
       {/* Main Footer Grid */}
       <div className="footer-main">
         <div className="footer-grid">
           {/* Brand Column */}
           <div className="footer-col brand-col">
             <Link to="/" className="footer-brand">
-              <Scale size={28} className="brand-icon" />
+              <img src={logoImg} alt="Adalat Logo" className="footer-logo-img" />
               <span>ADALAT</span>
             </Link>
             <p className="brand-tagline">Justice Delivered. Online.</p>
@@ -91,15 +79,6 @@ const Footer = () => {
           <p className="copyright">
             &copy; {new Date().getFullYear()} Adalat Legal Services. All rights reserved.
           </p>
-          <div className="footer-badges">
-            <span className="badge">
-              <ShieldCheck size={14} className="badge-icon" />
-              Bar Council Verification Compliant
-            </span>
-            <span className="made-in-india">
-              Made in India with <Heart size={14} className="heart-icon" />
-            </span>
-          </div>
         </div>
       </div>
     </footer>

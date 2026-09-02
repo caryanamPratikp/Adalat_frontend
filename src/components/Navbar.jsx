@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Scale, ShieldCheck, User, LogOut, Menu, X, ChevronDown } from 'lucide-react';
+import { ShieldCheck, User, LogOut, Menu, X, ChevronDown } from 'lucide-react';
+import logoImg from '../assets/logo.png';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -13,14 +14,17 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const isHomePage = location.pathname === '/';
+
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 80);
     };
     
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -44,12 +48,14 @@ const Navbar = () => {
     return location.pathname === path ? 'active' : '';
   };
 
+  const navbarClasses = `navbar ${isHomePage ? (scrolled ? 'scrolled' : 'transparent-hero') : 'solid-blue'}`;
+
   return (
-    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+    <nav className={navbarClasses}>
       <div className="navbar-container">
         <Link to="/" className="navbar-brand">
           <div className="brand-logo-container">
-            <Scale className="brand-icon" size={28} />
+            <img src={logoImg} alt="Adalat Logo" className="navbar-logo-img" />
           </div>
           <div className="brand-text">
             <span className="brand-name">ADALAT</span>

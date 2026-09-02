@@ -67,8 +67,8 @@ const LawyerDashboardPage = () => {
         )}
 
         <div className="metrics-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
-          <div className="metric-card card" style={{ border: '1.5px solid #C9A227' }}>
-            <div className="metric-icon-box gold"><Star size={22} fill="#C9A227" color="#C9A227" /></div>
+          <div className="metric-card card" style={{ border: '1.5px solid #5C5C99' }}>
+            <div className="metric-icon-box gold"><Star size={22} fill="#5C5C99" color="#5C5C99" /></div>
             <div>
               <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: '#102A43' }}>
                 {ratingInfo.average} <span style={{ fontSize: '0.85rem', color: '#64748B', fontWeight: 500 }}>/ 5.0</span>
@@ -104,7 +104,7 @@ const LawyerDashboardPage = () => {
           <div className="section-card card" style={{ marginBottom: '1.5rem' }}>
             <div className="card-header-row" style={{ marginBottom: '0.85rem' }}>
               <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '1rem', color: '#102A43' }}>
-                <Star size={18} fill="#C9A227" color="#C9A227" /> Client Ratings & Feedback Reviews ({ratingInfo.reviews.length})
+                <Star size={18} fill="#5C5C99" color="#5C5C99" /> Client Ratings & Feedback Reviews ({ratingInfo.reviews.length})
               </h3>
             </div>
 
@@ -113,7 +113,7 @@ const LawyerDashboardPage = () => {
                 <div key={rev.id} style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '10px', padding: '0.85rem 1rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
                     <strong style={{ fontSize: '0.88rem', color: '#102A43' }}>{rev.name}</strong>
-                    <span style={{ fontSize: '0.74rem', color: '#C9A227', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+                    <span style={{ fontSize: '0.74rem', color: '#5C5C99', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
                       ⭐ {rev.rating} / 5
                     </span>
                   </div>

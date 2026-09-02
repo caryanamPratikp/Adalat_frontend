@@ -7,21 +7,21 @@
   border: 1.5px solid #E2E8F0;
   box-shadow: 0 4px 14px rgba(16, 42, 67, 0.05);
   overflow: hidden;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
 .premium-lawyer-card:hover {
-  transform: translateY(-4px);
-  border-color: #C9A227;
-  box-shadow: 0 16px 32px rgba(201, 162, 39, 0.15);
+  transform: translateY(-6px);
+  border-color: #5C5C99;
+  box-shadow: 0 16px 36px rgba(92, 92, 153, 0.2);
 }
 
 .card-top-bar {
   height: 4px;
-  background: linear-gradient(90deg, #102A43 0%, #C9A227 50%, #102A43 100%);
+  background: linear-gradient(90deg, #102A43 0%, #5C5C99 50%, #102A43 100%);
   width: 100%;
 }
 
@@ -51,7 +51,7 @@
   height: 52px;
   border-radius: 14px;
   background: linear-gradient(135deg, #102A43 0%, #243B53 100%);
-  color: #C9A227;
+  color: #5C5C99;
   font-family: 'Cinzel', serif;
   font-size: 1.35rem;
   font-weight: 700;
@@ -157,8 +157,8 @@
   font-size: 0.68rem;
   font-weight: 700;
   background: rgba(201, 162, 39, 0.1);
-  color: #B08B1E;
-  border: 1px solid #C9A227;
+  color: #45457a;
+  border: 1px solid #5C5C99;
   padding: 0.15rem 0.55rem;
   border-radius: 6px;
   text-transform: uppercase;
@@ -193,7 +193,7 @@
 }
 
 .chip-icon {
-  color: #C9A227;
+  color: #5C5C99;
 }
 
 .lawyer-bio {
@@ -213,7 +213,7 @@
 
 .spec-label {
   font-weight: 700;
-  color: #C9A227;
+  color: #5C5C99;
   margin-right: 0.3rem;
 }
 

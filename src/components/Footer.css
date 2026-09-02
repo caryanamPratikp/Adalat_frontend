@@ -1,92 +1,27 @@
 /* Footer Variables based on design system */
 :root {
-  --footer-bg: #0F1F33;
-  --footer-bottom-bg: #0A1628;
-  --footer-cta-bg1: #102A43;
-  --footer-cta-bg2: #091724;
-  --footer-text: #94A3B8;
-  --footer-heading: #F8F6F1;
-  --footer-border: rgba(226, 232, 240, 0.1);
+  --footer-bg: #1C1C4A;
+  --footer-bottom-bg: #141438;
+  --footer-text: #FFFFFF;
+  --footer-heading: #FFFFFF;
+  --footer-border: rgba(255, 255, 255, 0.15);
 }
 
 .adalat-footer {
   width: 100%;
   font-family: 'Outfit', sans-serif;
-  color: var(--footer-text);
+  color: #FFFFFF;
   background-color: var(--footer-bg);
   position: relative;
   overflow: hidden;
-  border-top: 2px solid transparent;
-  border-image: linear-gradient(90deg, transparent, var(--accent-gold), transparent) 1;
+  border-top: 2px solid #5C5C99;
 }
 
-/* CTA Section */
-.footer-cta-section {
-  background: linear-gradient(135deg, var(--footer-cta-bg1) 0%, var(--footer-cta-bg2) 100%);
-  padding: 3rem 5%;
-  position: relative;
-  border-bottom: 1px solid var(--footer-border);
-}
-
-.footer-cta-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at center, rgba(201, 162, 39, 0.05) 0%, transparent 70%);
-  pointer-events: none;
-  animation: glowPulse 4s infinite alternate;
-}
-
-@keyframes glowPulse {
-  0% { opacity: 0.5; }
-  100% { opacity: 1; }
-}
-
-.footer-cta-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  z-index: 1;
-}
-
-.cta-text h2 {
-  font-family: 'Cinzel', serif;
-  color: var(--accent-gold);
-  font-size: 2rem;
-  margin: 0 0 0.5rem 0;
-}
-
-.cta-text p {
-  color: var(--bg-ivory);
-  margin: 0;
-  font-size: 1.1rem;
-  opacity: 0.9;
-}
-
-.footer-cta-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: var(--accent-gold);
-  color: var(--primary-navy);
-  padding: 0.8rem 1.5rem;
-  border-radius: var(--radius-sm, 6px);
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.25s ease;
-  box-shadow: 0 4px 12px rgba(201, 162, 39, 0.2);
-}
-
-.footer-cta-btn:hover {
-  background-color: var(--accent-gold-hover, #B08B1E);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(201, 162, 39, 0.3);
+.footer-logo-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
 }
 
 /* Main Footer */
@@ -107,33 +42,33 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  color: var(--accent-gold);
+  color: #FFFFFF;
   text-decoration: none;
   margin-bottom: 0.5rem;
-}
-
-.brand-icon {
-  color: var(--accent-gold);
 }
 
 .footer-brand span {
   font-family: 'Cinzel', serif;
   font-size: 1.75rem;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
+  color: #FFFFFF;
 }
 
 .brand-tagline {
-  color: var(--accent-gold);
+  color: #CCCCFF;
   font-family: 'Cinzel', serif;
-  font-size: 0.9rem;
+  font-size: 0.68rem;
   margin: 0 0 1rem 0;
-  opacity: 0.8;
+  letter-spacing: 0.5px;
+  opacity: 0.85;
 }
 
 .brand-description {
   line-height: 1.6;
   margin-bottom: 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
 }
 
 .footer-contact-info {
@@ -146,28 +81,29 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  color: var(--footer-text);
+  color: #FFFFFF;
   font-size: 0.95rem;
 }
 
 .contact-item a {
-  color: var(--footer-text);
+  color: #FFFFFF;
   text-decoration: none;
   transition: color 0.25s ease;
 }
 
 .contact-item a:hover {
-  color: var(--accent-gold);
+  color: #CCCCFF;
 }
 
 /* Links Columns */
 .footer-col-title {
   font-family: 'Cinzel', serif;
-  color: var(--accent-gold);
-  font-size: 1.2rem;
+  color: #FFFFFF;
+  font-size: 1.15rem;
   margin: 0 0 1.5rem 0;
   padding-left: 0.75rem;
-  border-left: 3px solid var(--accent-gold);
+  border-left: 3px solid #CCCCFF;
+  letter-spacing: 0.5px;
 }
 
 .footer-links {
@@ -180,16 +116,18 @@
 }
 
 .footer-links a {
-  color: var(--footer-text);
+  color: rgba(255, 255, 255, 0.88);
   text-decoration: none;
   transition: all 0.25s ease;
   display: inline-block;
   font-size: 0.95rem;
+  font-weight: 500;
 }
 
 .footer-links a:hover {
-  color: var(--accent-gold);
+  color: #FFFFFF;
   transform: translateX(5px);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
 }
 
 /* Footer Bottom */

@@ -34,8 +34,8 @@ const AssignTimeModal = ({ isOpen, onClose, consultation, onAssignSuccess }) => 
           <p style={{ margin: '0.2rem 0' }}><strong>Customer:</strong> {consultation.customerName || consultation.fullName || 'Client'}</p>
           <p style={{ margin: '0.2rem 0' }}><strong>Matter Category:</strong> {consultation.categoryDisplayName || consultation.category || 'General Legal Matter'}</p>
           {(consultation.caseSummary || consultation.summary || consultation.requestMessage) && (
-            <div style={{ background: '#F8FAFC', padding: '0.75rem', borderRadius: '8px', borderLeft: '3px solid #C9A227', marginTop: '0.5rem', fontSize: '0.82rem', color: '#102A43', whiteSpace: 'pre-line', lineHeight: '1.4' }}>
-              <div style={{ fontWeight: 700, color: '#C9A227', marginBottom: '0.25rem' }}>📌 Shared AI Case Assessment Summary:</div>
+            <div style={{ background: '#F8FAFC', padding: '0.75rem', borderRadius: '8px', borderLeft: '3px solid #5C5C99', marginTop: '0.5rem', fontSize: '0.82rem', color: '#102A43', whiteSpace: 'pre-line', lineHeight: '1.4' }}>
+              <div style={{ fontWeight: 700, color: '#5C5C99', marginBottom: '0.25rem' }}>📌 Shared AI Case Assessment Summary:</div>
               {consultation.caseSummary || consultation.summary || consultation.requestMessage}
             </div>
           )}

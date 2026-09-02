@@ -50,7 +50,7 @@ const LawyerCard = ({ lawyer }) => {
 
             <div className="rating-and-bar-row">
               <div className="rating-tag">
-                <Star size={13} fill={ratingInfo.count > 0 ? '#C9A227' : 'none'} color="#C9A227" />
+                <Star size={13} fill={ratingInfo.count > 0 ? '#5C5C99' : 'none'} color="#5C5C99" />
                 <span className="rating-score">{ratingInfo.count > 0 ? ratingInfo.average.toFixed(1) : '0.0'}</span>
                 <span className="rating-reviews-count">({ratingInfo.count} {ratingInfo.count === 1 ? 'review' : 'reviews'})</span>
               </div>

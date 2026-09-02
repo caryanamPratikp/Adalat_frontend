@@ -82,13 +82,13 @@ const LawyerProfilePage = () => {
                   height: '80px',
                   borderRadius: '50%',
                   background: 'linear-gradient(135deg, #102A43 0%, #1a365d 100%)',
-                  color: '#C9A227',
+                  color: '#5C5C99',
                   fontSize: '2rem',
                   fontWeight: 700,
                   display: 'flex',
                   alignItems: 'center',
                   justify: 'center',
-                  border: '2px solid #C9A227',
+                  border: '2px solid #5C5C99',
                   boxShadow: '0 4px 12px rgba(16, 42, 67, 0.2)',
                   flexShrink: 0
                 }}>
@@ -105,7 +105,7 @@ const LawyerProfilePage = () => {
 
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap', marginTop: '0.65rem', fontSize: '0.88rem', color: '#475569' }}>
                     <span style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                      <Award size={15} style={{ color: '#C9A227' }} />
+                      <Award size={15} style={{ color: '#5C5C99' }} />
                       Bar Reg: <strong>{advocate.barEnrollmentNumber || 'D/2491/2012'}</strong>
                     </span>
 
@@ -126,7 +126,7 @@ const LawyerProfilePage = () => {
             {/* LEGAL CATEGORIES & PRACTICE AREAS SECTION */}
             <div className="section-card card" style={{ padding: '1.75rem', background: '#FFFFFF', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', border: '1px solid #E2E8F0' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1.25rem', borderBottom: '1px solid #F1F5F9', paddingBottom: '0.75rem' }}>
-                <Scale size={20} style={{ color: '#C9A227' }} />
+                <Scale size={20} style={{ color: '#5C5C99' }} />
                 <h3 style={{ fontSize: '1.1rem', color: '#102A43', margin: 0, fontWeight: 700 }}>
                   Legal Categories & Practice Specializations ({practiceAreasList.length})
                 </h3>
@@ -143,7 +143,7 @@ const LawyerProfilePage = () => {
                         gap: '0.4rem',
                         background: 'linear-gradient(135deg, #102A43 0%, #1E3A5F 100%)',
                         color: '#F8F6F1',
-                        border: '1px solid #C9A227',
+                        border: '1px solid #5C5C99',
                         padding: '0.5rem 0.95rem',
                         borderRadius: '20px',
                         fontSize: '0.85rem',
@@ -151,7 +151,7 @@ const LawyerProfilePage = () => {
                         boxShadow: '0 2px 6px rgba(16, 42, 67, 0.15)'
                       }}
                     >
-                      <CheckCircle2 size={13} style={{ color: '#C9A227' }} />
+                      <CheckCircle2 size={13} style={{ color: '#5C5C99' }} />
                       {PRACTICE_AREA_LABELS[area] || area.replace(/_/g, ' ')}
                     </span>
                   ))}
@@ -168,7 +168,7 @@ const LawyerProfilePage = () => {
             {/* BIO / PROFESSIONAL SUMMARY */}
             <div className="section-card card" style={{ padding: '1.75rem', background: '#FFFFFF', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', border: '1px solid #E2E8F0' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1rem', borderBottom: '1px solid #F1F5F9', paddingBottom: '0.75rem' }}>
-                <BookOpen size={18} style={{ color: '#C9A227' }} />
+                <BookOpen size={18} style={{ color: '#5C5C99' }} />
                 <h3 style={{ fontSize: '1.1rem', color: '#102A43', margin: 0, fontWeight: 700 }}>
                   Professional Overview & Background
                 </h3>
@@ -184,7 +184,7 @@ const LawyerProfilePage = () => {
             {/* PRICING CARD */}
             <div className="section-card card" style={{ padding: '1.5rem', background: '#FFFFFF', borderRadius: '12px', border: '1px solid #E2E8F0' }}>
               <h4 style={{ fontSize: '0.95rem', color: '#102A43', marginBottom: '1rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <IndianRupee size={16} style={{ color: '#C9A227' }} /> Consultation Pricing
+                <IndianRupee size={16} style={{ color: '#5C5C99' }} /> Consultation Pricing
               </h4>
 
               <div style={{ background: '#F8FAFC', padding: '1rem', borderRadius: '8px', border: '1px solid #E2E8F0', textAlign: 'center' }}>
