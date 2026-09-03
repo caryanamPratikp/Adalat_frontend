@@ -8,7 +8,9 @@ export const lawyerApi = {
 
   // Get saved lawyer registration progress
   getLawyerById: (id) => {
-    return apiClient.get(`/api/lawyers/register/${id}`);
+    return apiClient.get(`/api/lawyers/register/${id}`).catch(() => {
+      return { status: 'FAIL', data: null, message: 'Lawyer record not found' };
+    });
   },
 
   // Step 2: Professional details
@@ -21,14 +23,20 @@ export const lawyerApi = {
     const formData = new FormData();
     formData.append('documentType', documentType);
     formData.append('file', file);
-    return apiClient.post(`/api/lawyers/${lawyerId}/documents`, formData, {
+    return apiClient.post(`/api/lawyers/register/${lawyerId}/step3`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
   },
 
-  // Step 4: Pricing setup
-  updateStep4: (lawyerId, consultationRate) => {
-    return apiClient.put(`/api/lawyers/register/${lawyerId}/step4`, { consultationRate });
+  // Step 4: Pricing setup (Accepts numeric amount or consultationRate enum)
+  updateStep4: (lawyerId, amountOrRate) => {
+    let payload = {};
+    if (typeof amountOrRate === 'number' || (!isNaN(amountOrRate) && !String(amountOrRate).startsWith('RATE_'))) {
+      payload = { amount: parseInt(amountOrRate, 10) || 99 };
+    } else {
+      payload = { consultationRate: amountOrRate || 'RATE_99' };
+    }
+    return apiClient.put(`/api/lawyers/register/${lawyerId}/step4`, payload);
   },
 
   // Step 5: UPI payout setup
@@ -38,6 +46,9 @@ export const lawyerApi = {
 
   // Final Step: Submit for admin verification
   submitApplication: (lawyerId) => {
+    return apiClient.put(`/api/lawyers/register/${lawyerId}/submit`);
+  },
+  submitForVerification: (lawyerId) => {
     return apiClient.put(`/api/lawyers/register/${lawyerId}/submit`);
   },
 

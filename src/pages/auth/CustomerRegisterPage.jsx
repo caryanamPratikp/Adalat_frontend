@@ -110,11 +110,9 @@ const CustomerRegisterPage = () => {
         const lawyerId = res.data.lawyerId;
         localStorage.setItem('adalat_lawyer_id', lawyerId);
         toast.success('Advocate Account Created! Proceeding to Onboarding Wizard...');
-
         try {
           await loginLawyer(formData.email, formData.password);
         } catch (err) {}
-
         navigate(`/lawyer/onboarding?lawyerId=${lawyerId}`);
       }
     } catch (err) {

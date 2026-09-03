@@ -54,11 +54,17 @@ const PaymentModal = ({
 
   if (!isOpen) return null;
 
+  const baseNum = parseFloat(amount) || 99.00;
+  const gstNum = Math.round((baseNum * 0.18) * 100) / 100;
+  const totalNum = Math.round((baseNum + gstNum) * 100) / 100;
+
   const handleSimulatePayment = async () => {
     setLoading(true);
     const paymentRef = {
       gatewayPaymentId: 'PAY-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
-      amount: amount,
+      amount: totalNum.toFixed(2),
+      baseAmount: baseNum.toFixed(2),
+      gstAmount: gstNum.toFixed(2),
       lawyerName: lawyerName
     };
 
@@ -100,10 +106,20 @@ const PaymentModal = ({
               <h4 className="payment-modal-title">{title}</h4>
 
               <div className="payment-amount-card">
-                <span className="amount-payable-label">Amount Payable:</span>
-                <h2 className="amount-payable-value">₹{amount}</h2>
-                <p className="amount-payout-text">
-                  Direct payout to:<br />
+                <div style={{ fontSize: '0.82rem', color: '#64748B', display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                  <span>Base Fee:</span>
+                  <span style={{ fontWeight: 600, color: '#1C1C4A' }}>₹{baseNum.toFixed(2)}</span>
+                </div>
+                <div style={{ fontSize: '0.82rem', color: '#64748B', display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                  <span>18% GST:</span>
+                  <span style={{ fontWeight: 600, color: '#D97706' }}>+ ₹{gstNum.toFixed(2)}</span>
+                </div>
+                <div style={{ borderTop: '1px dashed #CBD5E1', paddingTop: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span className="amount-payable-label" style={{ margin: 0 }}>Total Amount:</span>
+                  <h2 className="amount-payable-value" style={{ margin: 0, color: '#10B981' }}>₹{totalNum.toFixed(2)}</h2>
+                </div>
+                <p className="amount-payout-text" style={{ marginTop: '10px' }}>
+                  Direct settlement to:<br />
                   <strong>{lawyerName}</strong><br />
                   <span className="upi-handle">(UPI: {lawyerUpiId})</span>
                 </p>
@@ -117,7 +133,7 @@ const PaymentModal = ({
               <div className="qr-and-apps-row">
                 <div className="qr-box">
                   <img 
-                    src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(`upi://pay?pa=${lawyerUpiId}&pn=${lawyerName}&am=${amount}&cu=INR&tn=Consultation%20Fee`)}`}
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(`upi://pay?pa=${lawyerUpiId}&pn=${lawyerName}&am=${totalNum.toFixed(2)}&cu=INR&tn=Consultation%20Fee`)}`}
                     alt="UPI QR Code"
                     className="qr-image" 
                   />

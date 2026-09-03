@@ -20,6 +20,17 @@ const AVAILABLE_PRACTICE_AREAS = [
   { id: 'MATRIMONIAL_MATTERS', label: 'Matrimonial Matters' },
 ];
 
+const AVAILABLE_LANGUAGES = [
+  { id: 'ENGLISH', label: 'English' },
+  { id: 'HINDI', label: 'Hindi' },
+  { id: 'MARATHI', label: 'Marathi' },
+  { id: 'TAMIL', label: 'Tamil' },
+  { id: 'TELUGU', label: 'Telugu' },
+  { id: 'BENGALI', label: 'Bengali' },
+  { id: 'GUJARATI', label: 'Gujarati' },
+  { id: 'KANNADA', label: 'Kannada' }
+];
+
 const HeaderScalesGraphic = () => (
   <svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
     {/* Books stack at bottom */}
@@ -76,6 +87,34 @@ const LawyerRegisterWizardPage = () => {
   const photoRef = useRef(null);
   const expCertRef = useRef(null);
 
+  const [profilePhotoPreview, setProfilePhotoPreview] = useState(null);
+  const [profilePhotoName, setProfilePhotoName] = useState('');
+  const photoFileRef = useRef(null);
+
+  const handleProfilePhotoSelect = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfilePhotoName(file.name);
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setProfilePhotoPreview(event.target.result);
+      };
+      reader.readAsDataURL(file);
+
+      if (lawyerId) {
+        try {
+          const res = await lawyerApi.uploadDocument(lawyerId, 'PHOTO', file);
+          if (res && res.data && res.data.fileUrl) {
+            setStep1Data(prev => ({ ...prev, profilePhotoUrl: res.data.fileUrl }));
+            toast.success('Profile photo uploaded successfully!');
+          }
+        } catch (err) {
+          console.log('Profile photo upload error:', err);
+        }
+      }
+    }
+  };
+
   const handleCardClick = (key) => {
     if (key === 'barCert' && barCertRef.current) barCertRef.current.click();
     if (key === 'enrollCert' && enrollCertRef.current) enrollCertRef.current.click();
@@ -85,9 +124,28 @@ const LawyerRegisterWizardPage = () => {
     if (key === 'expCert' && expCertRef.current) expCertRef.current.click();
   };
 
-  const handleFileChange = (key, e) => {
+  const handleFileChange = async (key, e) => {
     const file = e.target.files[0];
     if (file) {
+      const docTypeMap = {
+        barCert: 'BAR_COUNCIL_CERTIFICATE',
+        enrollCert: 'ENROLLMENT_CERTIFICATE',
+        idProof: 'ID_PROOF',
+        addressProof: 'ADDRESS_PROOF',
+        photo: 'PHOTO',
+        expCert: 'DEGREE_CERTIFICATE'
+      };
+
+      // Direct backend API upload
+      if (lawyerId) {
+        try {
+          await lawyerApi.uploadDocument(lawyerId, docTypeMap[key] || 'BAR_COUNCIL_CERTIFICATE', file);
+          toast.success(`${file.name} saved to database successfully!`);
+        } catch (uploadErr) {
+          console.log('Document upload error:', uploadErr);
+        }
+      }
+
       const reader = new FileReader();
       reader.onload = (event) => {
         const fileData = {
@@ -143,7 +201,7 @@ const LawyerRegisterWizardPage = () => {
   const fetchExistingProgress = async (id) => {
     try {
       const res = await lawyerApi.getLawyerById(id);
-      if (res && res.data) {
+      if (res && res.status === 'SUCCESS' && res.data) {
         const data = res.data;
 
         setStep1Data({
@@ -153,8 +211,14 @@ const LawyerRegisterWizardPage = () => {
           location: data.location || 'New Delhi',
           practiceAreas: data.practiceAreas && data.practiceAreas.length > 0 ? data.practiceAreas : ['CRIMINAL_LAW'],
           languages: data.languages || ['ENGLISH', 'HINDI'],
-          bio: data.bio || 'Practicing advocate with extensive courtroom experience.'
+          bio: data.bio || 'Practicing advocate with extensive courtroom experience.',
+          profilePhotoUrl: data.profilePhotoUrl || ''
         });
+
+        if (data.consultationFee || data.consultationRateAmount) {
+          const feeVal = data.consultationFee || data.consultationRateAmount;
+          setPricingData(prev => ({ ...prev, chatFee: feeVal.toString() }));
+        }
 
         if (data.upiId) {
           setUpiData(prev => ({ ...prev, upiId: data.upiId }));
@@ -163,8 +227,12 @@ const LawyerRegisterWizardPage = () => {
         if (data.registrationStatus === 'SUBMITTED') {
           setIsSubmitted(true);
         }
+      } else {
+        localStorage.removeItem('adalat_lawyer_id');
       }
-    } catch (err) {}
+    } catch (err) {
+      localStorage.removeItem('adalat_lawyer_id');
+    }
   };
 
   const handleLogout = () => {
@@ -183,6 +251,16 @@ const LawyerRegisterWizardPage = () => {
     });
   };
 
+  const handleLanguageToggle = (langId) => {
+    setStep1Data(prev => {
+      const exists = prev.languages.includes(langId);
+      const updated = exists 
+        ? prev.languages.filter(l => l !== langId)
+        : [...prev.languages, langId];
+      return { ...prev, languages: updated };
+    });
+  };
+
   // Navigation handlers
   const handleStep1Next = async (e) => {
     e.preventDefault();
@@ -192,6 +270,10 @@ const LawyerRegisterWizardPage = () => {
     }
     if (step1Data.practiceAreas.length === 0) {
       toast.error('Please select at least one Practice Area');
+      return;
+    }
+    if (step1Data.languages.length === 0) {
+      toast.error('Please select at least one Language Spoken');
       return;
     }
     setLoading(true);
@@ -219,18 +301,39 @@ const LawyerRegisterWizardPage = () => {
     setCurrentStep(3);
   };
 
-  const handleStep3Next = (e) => {
+  const handleStep3Next = async (e) => {
     e.preventDefault();
-    setCurrentStep(4);
+    setLoading(true);
+    try {
+      if (lawyerId) {
+        const customAmount = parseInt(pricingData.chatFee, 10) || 99;
+        await lawyerApi.updateStep4(lawyerId, customAmount);
+      }
+      setCurrentStep(4);
+    } catch (err) {
+      setCurrentStep(4);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleStep4Next = (e) => {
+  const handleStep4Next = async (e) => {
     e.preventDefault();
     if (!upiData.upiId) {
       toast.error('Please enter a valid UPI ID for receiving payouts.');
       return;
     }
-    setCurrentStep(5);
+    setLoading(true);
+    try {
+      if (lawyerId) {
+        await lawyerApi.updateStep5(lawyerId, upiData.upiId);
+      }
+      setCurrentStep(5);
+    } catch (err) {
+      setCurrentStep(5);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleFinalSubmit = async (e) => {
@@ -242,13 +345,19 @@ const LawyerRegisterWizardPage = () => {
     setLoading(true);
     try {
       if (lawyerId) {
-        await lawyerApi.submitForVerification(lawyerId, upiData.upiId || 'advocate@upi');
+        if (pricingData.chatFee) {
+          const customAmount = parseInt(pricingData.chatFee, 10) || 99;
+          await lawyerApi.updateStep4(lawyerId, customAmount).catch(() => {});
+        }
+        if (upiData.upiId) {
+          await lawyerApi.updateStep5(lawyerId, upiData.upiId).catch(() => {});
+        }
+        await lawyerApi.submitApplication(lawyerId);
       }
       setIsSubmitted(true);
       toast.success('Onboarding application submitted for verification!');
     } catch (err) {
-      setIsSubmitted(true);
-      toast.success('Onboarding application submitted for verification!');
+      toast.error(err.message || 'Submission failed. Please make sure all required fields and documents are uploaded.');
     } finally {
       setLoading(false);
     }
@@ -391,6 +500,82 @@ const LawyerRegisterWizardPage = () => {
                       );
                     })}
                   </div>
+                </div>
+
+                <div className="form-group-wiz">
+                  <label className="form-label-wiz">Languages Spoken <span className="required">* (Select at least one)</span></label>
+                  <div className="checkbox-chips-grid">
+                    {AVAILABLE_LANGUAGES.map(lang => {
+                      const isSelected = step1Data.languages.includes(lang.id);
+                      return (
+                        <div 
+                          key={lang.id} 
+                          className={`chip-checkbox-btn ${isSelected ? 'selected' : ''}`}
+                          onClick={() => handleLanguageToggle(lang.id)}
+                        >
+                          <input type="checkbox" checked={isSelected} readOnly />
+                          <span>{lang.label}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="form-group-wiz" style={{ marginTop: '0.75rem' }}>
+                  <label className="form-label-wiz">Advocate Profile Photo <span className="required">* (Accepts JPG, PNG, WEBP, GIF - All Image Formats)</span></label>
+                  <div 
+                    onClick={() => photoFileRef.current && photoFileRef.current.click()}
+                    style={{
+                      border: '2px dashed #1C1C4A',
+                      borderRadius: '12px',
+                      padding: '0.85rem 1.15rem',
+                      background: '#F0F0FC',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '1rem',
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    <input 
+                      type="file" 
+                      ref={photoFileRef} 
+                      onChange={handleProfilePhotoSelect} 
+                      accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp" 
+                      style={{ display: 'none' }} 
+                    />
+                    {profilePhotoPreview || step1Data.profilePhotoUrl ? (
+                      <img 
+                        src={profilePhotoPreview || step1Data.profilePhotoUrl} 
+                        alt="Profile Preview" 
+                        style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', border: '2.5px solid #10B981', flexShrink: 0 }} 
+                      />
+                    ) : (
+                      <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: '#E2E8F0', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        <Upload size={20} style={{ color: '#1C1C4A' }} />
+                      </div>
+                    )}
+                    <div>
+                      <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#1C1C4A' }}>
+                        {profilePhotoName ? profilePhotoName : (step1Data.profilePhotoUrl ? 'Profile Photo Uploaded' : 'Click to Upload Profile Photo Image')}
+                      </div>
+                      <div style={{ fontSize: '0.78rem', color: '#64748B' }}>
+                        {profilePhotoName || step1Data.profilePhotoUrl ? '✓ Photo selected & saved in database' : 'Supports JPG, PNG, WEBP, GIF, and all image formats'}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="form-group-wiz" style={{ marginTop: '0.75rem' }}>
+                  <label className="form-label-wiz">Professional Bio & Practice Summary <span className="required">*</span></label>
+                  <textarea 
+                    className="form-input-wiz" 
+                    rows="3"
+                    placeholder="Describe your legal practice experience, court appearances, key achievements, and specialization details..."
+                    value={step1Data.bio || ''}
+                    onChange={e => setStep1Data({ ...step1Data, bio: e.target.value })}
+                    required
+                  />
                 </div>
 
                 <div className="wizard-actions-bar" style={{ justifyContent: 'flex-end' }}>
