@@ -15,6 +15,20 @@ export const consultationApi = {
     });
   },
 
+  // 2b. Process Dynamic Conversational Intake Turn
+  processTurn: (sessionId, messageText, intentSelection = null, customIntentDescription = null) => {
+    return apiClient.post(`/api/customer/legal-assistance/${sessionId}/turn`, {
+      message: messageText,
+      intentSelection: intentSelection,
+      customIntentDescription: customIntentDescription
+    });
+  },
+
+  // 3. Update / Edit Case Summary
+  updateSummary: (sessionId, editedCaseFactState, editedSummary) => {
+    return apiClient.put(`/api/customer/legal-assistance/${sessionId}/summary`, { editedCaseFactState, editedSummary });
+  },
+
   // 3. Answer Question
   answerQuestion: (sessionId, questionId, answerText) => {
     return apiClient.post(`/api/customer/legal-assistance/${sessionId}/answer`, { questionId, answerText }).catch(() => {
@@ -46,9 +60,12 @@ export const consultationApi = {
     });
   },
 
-  // 7. Request Lawyer Consultation from Session
+  // 7. Request Lawyer Consultation / Submit to Lawyer from Session
   requestLawyerConsultation: (sessionId, lawyerId) => {
-    return apiClient.post(`/api/customer/legal-assistance/${sessionId}/lawyers/${lawyerId}/request`);
+    return apiClient.post(`/api/customer/legal-assistance/${sessionId}/submit-to-lawyer?lawyerId=${lawyerId}`);
+  },
+  submitToLawyer: (sessionId, lawyerId) => {
+    return apiClient.post(`/api/customer/legal-assistance/${sessionId}/submit-to-lawyer?lawyerId=${lawyerId}`);
   },
 
   // 8. Get Customer's Legal Sessions History
